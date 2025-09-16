@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Control de Calefacción</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Work+Sans:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    :root{ --brand:#f2b90d; --ink:#1c180d; --muted:#6b7280; --bg:#fcfbf8; }
+    body{ font-family:"Work Sans","Noto Sans",sans-serif; background:var(--bg); color:var(--ink); }
+    .switch{ width:56px; height:28px; border-radius:999px; position:relative; }
+    .knob{ width:22px; height:22px; top:3px; left:3px; border-radius:999px; position:absolute; transition:transform .2s ease; }
+    .tab-active{ border-color:var(--brand); font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="relative flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 hidden lg:flex flex-col bg-white border-r border-gray-200">
+      <div class="p-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full" style="background:var(--brand)"></div>
+          <h1 class="text-xl font-bold">Api Connect</h1>
+        </div>
+      </div>
+      <nav class="flex-1 px-4 py-4 space-y-2">
+        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="dashboard.html">
+          <span class="material-symbols-outlined text-gray-500">dashboard</span><span class="text-sm font-medium">Panel</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="history.html">
+          <span class="material-symbols-outlined text-gray-500">history</span><span class="text-sm font-medium">Historial</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="lotes.html">
+          <span class="material-symbols-outlined text-gray-500">inventory_2</span><span class="text-sm font-medium">Producción</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="thresholds.html">
+          <span class="material-symbols-outlined text-gray-500">tune</span><span class="text-sm font-medium">Umbrales</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 bg-[var(--brand)]/20 text-[var(--ink)] rounded-lg" href="calefaccion.html">
+          <span class="material-symbols-outlined" style="color:var(--brand)">whatshot</span><span class="text-sm font-medium">Calefacción</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-6 lg:p-10">
+      <div class="max-w-5xl mx-auto">
+        <header class="mb-8">
+          <h2 class="text-4xl font-bold tracking-tight">Control de Calefacción</h2>
+          <p class="text-[var(--muted)] mt-2">Control manual/automático con historial y exportación a CSV.</p>
+        </header>
+
+        <!-- Panel de control -->
+        <section class="bg-white border border-gray-200 rounded-lg shadow-sm">
+          <div class="p-6 grid gap-6 md:grid-cols-2">
+            <div class="space-y-3">
+              <h3 class="text-lg font-semibold">Calefacción de colmenas</h3>
+              <p class="text-sm text-gray-600">Estado actual:
+                <span id="statusLabel" class="font-semibold text-green-600">Encendido</span>
+                <span id="modeLabel" class="ml-2 text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">Modo: Manual</span>
+              </p>
+              <div class="flex items-center gap-4">
+                <!-- Switch -->
+                <button id="switchBtn" class="switch bg-gray-200 has-[.on]:bg-[var(--brand)] rounded-full transition-colors relative" aria-pressed="true">
+                  <span id="knob" class="knob bg-white shadow"></span>
+                </button>
+                <div class="flex items-center gap-2">
+                  <input id="autoChk" type="checkbox" class="rounded border-gray-300 text-[var(--brand)] focus:ring-[var(--brand)]">
+                  <label for="autoChk" class="text-sm text-gray-700">Modo automático</label>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div class="p-3 rounded-lg border">
+                  <p class="text-xs text-gray-500">Temp. actual</p>
+                  <div class="flex items-center gap-2">
+                    <input id="tempNow" type="number" step="0.1" class="form-input w-24 rounded-md border-gray-300" value="25.0">
+                    <span class="text-sm text-gray-600">°C</span>
+                    <button id="btnJitter" class="ml-auto text-xs px-2 py-1 rounded bg-gray-100 hover:bg-gray-200">Variar</button>
+                  </div>
+                </div>
+                <div class="p-3 rounded-lg border">
+                  <p class="text-xs text-gray-500">Umbral (Temp)</p>
+                  <p id="thrText" class="text-sm font-medium">10–35 °C</p>
+                  <p class="text-xs text-gray-500">Histeresis ±1 °C</p>
+                </div>
+              </div>
+
+              <div class="text-xs text-gray-500">
+                Lógica AUTO: <em>enciende</em> si T &lt; <b>min+1</b>, <em>apaga</em> si T &gt; <b>min+3</b> o si T &gt; <b>max</b>. (Evita “parpadeo”)
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-sm font-semibold text-gray-700">Acciones rápidas</h4>
+              <div class="flex flex-wrap gap-2">
+                <button id="btnOn"  class="px-3 py-2 rounded bg-green-600 text-white text-sm hover:brightness-110">Encender</button>
+                <button id="btnOff" class="px-3 py-2 rounded bg-red-600 text-white text-sm hover:brightness-110">Apagar</button>
+                <button id="btnSave" class="px-3 py-2 rounded bg-[var(--brand)] text-[var(--ink)] text-sm hover:brightness-110">Guardar estado</button>
+              </div>
+              <p id="saveMsg" class="text-xs text-emerald-700 hidden">Estado guardado.</p>
+
+              <div class="mt-4 p-3 rounded-lg border">
+                <p class="text-xs text-gray-500 mb-1">Último evento</p>
+                <p id="lastEvent" class="text-sm text-gray-700">—</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Historial -->
+        <section class="mt-12">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-2xl font-bold tracking-tight">Historial de Activaciones</h3>
+            <div class="flex items-center gap-2">
+              <button id="btnExport" class="px-3 py-2 rounded bg-white border text-sm hover:bg-gray-50">Exportar CSV</button>
+              <button id="btnClear"  class="px-3 py-2 rounded bg-white border text-sm hover:bg-gray-50">Limpiar</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto border rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200" id="tbl">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fecha</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Hora</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Modo</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Temp (°C)</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Motivo</th>
+                </tr>
+              </thead>
+              <tbody id="tbody" class="bg-white divide-y divide-gray-200"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ====== Storage keys ======
+    const K_STATE = 'api-connect-heat-state';   // {on:boolean, auto:boolean, last:number}
+    const K_LOG   = 'api-connect-heat-log';     // [{ts, on, mode, temp, reason}]
+    const K_THR   = 'api-connect-thresholds';   // thresholds from thresholds.html
+
+    // ====== Helpers ======
+    const $ = (s) => document.querySelector(s);
+    const fmt2 = (n) => String(n).padStart(2, '0');
+
+    function nowParts(){
+      const d = new Date();
+      const fecha = `${fmt2(d.getDate())}/${fmt2(d.getMonth()+1)}/${d.getFullYear()}`;
+      const hora  = `${fmt2(d.getHours())}:${fmt2(d.getMinutes())}`;
+      return {fecha, hora, ts: d.getTime()};
+    }
+
+    function load(key, def){
+      try{ return JSON.parse(localStorage.getItem(key) || JSON.stringify(def)); }
+      catch{ return def; }
+    }
+    function save(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+    // ====== Thresholds (Temp) ======
+    function getThresholds(){
+      const def = { temp:{min:10,max:35}, hum:{min:40,max:70}, w:{min:5,max:20} };
+      const raw = load(K_THR, def);
+      return Object.assign(def, raw);
+    }
+
+    // ====== UI refs ======
+    const switchBtn = $('#switchBtn');
+    const knob      = $('#knob');
+    const autoChk   = $('#autoChk');
+    const statusLabel = $('#statusLabel');
+    const modeLabel   = $('#modeLabel');
+    const tempNow   = $('#tempNow');
+    const thrText   = $('#thrText');
+    const btnJitter = $('#btnJitter');
+    const btnOn     = $('#btnOn');
+    const btnOff    = $('#btnOff');
+    const btnSave   = $('#btnSave');
+    const saveMsg   = $('#saveMsg');
+    const lastEvent = $('#lastEvent');
+    const tbody     = $('#tbody');
+    const btnExport = $('#btnExport');
+    const btnClear  = $('#btnClear');
+
+    // ====== State ======
+    let state = load(K_STATE, { on:true, auto:false, last:Date.now() });
+    let log   = load(K_LOG, []);
+
+    // ====== Render ======
+    function renderStatus(){
+      // Switch visual
+      switchBtn.setAttribute('aria-pressed', state.on ? 'true' : 'false');
+      switchBtn.style.background = state.on ? 'var(--brand)' : '#e5e7eb';
+      knob.style.transform = state.on ? 'translateX(28px)' : 'translateX(0)';
+
+      // Labels
+      statusLabel.textContent = state.on ? 'Encendido' : 'Apagado';
+      statusLabel.classList.toggle('text-green-600', state.on);
+      statusLabel.classList.toggle('text-red-600', !state.on);
+
+      modeLabel.textContent = `Modo: ${state.auto ? 'Automático' : 'Manual'}`;
+
+      // Thresholds label
+      const thr = getThresholds();
+      thrText.textContent = `${thr.temp.min}–${thr.temp.max} °C`;
+    }
+
+    function renderTable(){
+      tbody.innerHTML = log
+        .slice() // copy
+        .sort((a,b)=> b.ts - a.ts)
+        .map(e=>{
+          const d = new Date(e.ts);
+          const fecha = `${fmt2(d.getDate())}/${fmt2(d.getMonth()+1)}/${d.getFullYear()}`;
+          const hora  = `${fmt2(d.getHours())}:${fmt2(d.getMinutes())}`;
+          const pill = e.on
+            ? '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Encendido</span>'
+            : '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Apagado</span>';
+          return `
+            <tr>
+              <td class="px-6 py-3 text-sm text-gray-600">${fecha}</td>
+              <td class="px-6 py-3 text-sm text-gray-600">${hora}</td>
+              <td class="px-6 py-3 text-sm">${pill}</td>
+              <td class="px-6 py-3 text-sm text-gray-600">${e.mode}</td>
+              <td class="px-6 py-3 text-sm text-gray-600">${(e.temp ?? '—')}</td>
+              <td class="px-6 py-3 text-sm text-gray-600">${e.reason || '—'}</td>
+            </tr>
+          `;
+        }).join('');
+
+      if(log.length){
+        const ev = log[log.length-1];
+        const d = new Date(ev.ts);
+        lastEvent.textContent = `${ev.on ? 'Encendido' : 'Apagado'} (${ev.mode}) — ${fmt2(d.getDate())}/${fmt2(d.getMonth()+1)}/${d.getFullYear()} ${fmt2(d.getHours())}:${fmt2(d.getMinutes())}`;
+      } else {
+        lastEvent.textContent = '—';
+      }
+    }
+
+    function pushLog({on, mode, temp, reason}){
+      const { ts } = nowParts();
+      log.push({ ts, on, mode, temp, reason });
+      save(K_LOG, log);
+      renderTable();
+    }
+
+    // ====== Actions ======
+    function setOn(on, reason=''){
+      if(state.on === on) return; // no-op
+      state.on = on;
+      state.last = Date.now();
+      save(K_STATE, state);
+      renderStatus();
+      pushLog({ on, mode: state.auto ? 'AUTO' : 'MANUAL', temp: Number(tempNow.value), reason });
+    }
+
+    function toggleManual(){
+      if(state.auto) return; // manual only in manual mode
+      setOn(!state.on, 'Interruptor manual');
+    }
+
+    // AUTO logic with hysteresis
+    function autoTick(){
+      if(!state.auto) return;
+      const thr = getThresholds();
+      const t = Number(tempNow.value);
+      const lowOn   = thr.temp.min + 1; // enciende si muy bajo
+      const lowOff  = thr.temp.min + 3; // apaga cuando ya remontó
+      const hardMax = thr.temp.max;     // apaga si sobrepasó max
+
+      if(!state.on && t < lowOn){
+        setOn(true, `AUTO: T=${t}°C < ${lowOn}°C`);
+      } else if(state.on && (t > lowOff || t > hardMax)){
+        setOn(false, `AUTO: T=${t}°C > ${t>hardMax?hardMax:lowOff}°C`);
+      }
+    }
+
+    // ====== Events ======
+    switchBtn.addEventListener('click', toggleManual);
+    btnOn.addEventListener('click', ()=> !state.auto && setOn(true, 'Botón encender'));
+    btnOff.addEventListener('click',()=> !state.auto && setOn(false,'Botón apagar'));
+
+    autoChk.addEventListener('change', (e)=>{
+      state.auto = e.target.checked;
+      save(K_STATE, state);
+      renderStatus();
+      // Al activar AUTO, ejecuta una evaluación inmediata
+      autoTick();
+    });
+
+    btnJitter.addEventListener('click', ()=>{
+      const base = Number(tempNow.value)||25;
+      const jitter = (Math.random()*2-1)*1.5; // ±1.5°C
+      tempNow.value = (base + jitter).toFixed(1);
+      autoTick();
+    });
+
+    tempNow.addEventListener('input', ()=> { /* sólo cambia el número */ });
+    tempNow.addEventListener('change', ()=> { autoTick(); });
+
+    btnSave.addEventListener('click', ()=>{
+      save(K_STATE, state);
+      saveMsg.classList.remove('hidden');
+      setTimeout(()=>saveMsg.classList.add('hidden'), 1500);
+    });
+
+    btnExport.addEventListener('click', ()=>{
+      if(!log.length) return alert('No hay eventos para exportar.');
+      const rows = [['fecha','hora','estado','modo','temp_c','motivo']];
+      log.forEach(e=>{
+        const d = new Date(e.ts);
+        rows.push([
+          `${fmt2(d.getDate())}/${fmt2(d.getMonth()+1)}/${d.getFullYear()}`,
+          `${fmt2(d.getHours())}:${fmt2(d.getMinutes())}`,
+          e.on ? 'Encendido' : 'Apagado',
+          e.mode,
+          (e.temp ?? '').toString().replace('.', ','),
+          (e.reason||'').replace(/\n/g,' ')
+        ]);
+      });
+      const csv = rows.map(r=>r.map(x=>{
+        const s = String(x??'');
+        return s.includes(';') || s.includes(',') ? `"${s.replace(/"/g,'""')}"` : s;
+      }).join(';')).join('\n');
+
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'calefaccion_historial.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    btnClear.addEventListener('click', ()=>{
+      if(!confirm('¿Borrar todo el historial?')) return;
+      log = [];
+      save(K_LOG, log);
+      renderTable();
+    });
+
+    // ====== Init ======
+    function init(){
+      // Cargar thresholds
+      const thr = getThresholds();
+      thrText.textContent = `${thr.temp.min}–${thr.temp.max} °C`;
+
+      // Cargar estado
+      autoChk.checked = state.auto === true;
+      renderStatus();
+      renderTable();
+
+      // Si AUTO, hacer evaluación periódica
+      setInterval(autoTick, 1500);
+    }
+    init();
+  </script>
+</body>
+</html>

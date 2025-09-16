@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Historial de Datos</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Variables + utilidades compatibles con Tailwind -->
+  <style>
+    :root{
+      --primary-color:#f2b90d;
+      --secondary-color:#fcfbf8;
+      --text-color:#1c180d;
+      --subtle-text-color:#9c8749;
+      --border-color:#e8e2ce;
+      --background-color:#fcfbf8;
+      --accent-color:#f4f0e7;
+    }
+    body{ font-family:"Work Sans","Noto Sans",sans-serif; }
+    .material-symbols-outlined{ font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+
+    /* Clases utilitarias que usas en el HTML */
+    .bg-background-color{ background-color:var(--background-color); }
+    .text-text-color{ color:var(--text-color); }
+    .text-subtle-text-color{ color:var(--subtle-text-color); }
+    .border-border-color{ border-color:var(--border-color); }
+    .bg-secondary-color{ background-color:var(--secondary-color); }
+    .bg-accent-color{ background-color:var(--accent-color); }
+    .focus-primary:focus{ outline:none; box-shadow:0 0 0 3px var(--primary-color) inset; border-color:var(--primary-color); }
+  </style>
+</head>
+
+<body class="bg-background-color text-text-color">
+  <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+    <div class="flex h-full grow flex-col">
+
+      <!-- Header -->
+      <header class="flex items-center justify-between border-b border-solid border-border-color px-10 py-3">
+        <div class="flex items-center gap-4">
+          <div class="text-[var(--primary-color)]">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.5 6.7554C16.5 7.64094 15.0866 8.3976 13.0659 8.847C11.8315 9.13527 10.3703 9.30232 9 9.30232C7.62967 9.30232 6.16853 9.13527 4.93412 8.847C2.91338 8.3976 1.5 7.64094 1.5 6.7554V17.2446C1.5 18.1251 2.91338 18.8842 4.93412 19.3335C6.16853 19.6218 7.62967 19.7888 9 19.7888C10.3703 19.7888 11.8315 19.6218 13.0659 19.3335C15.0866 18.8842 16.5 18.1251 16.5 17.2446V6.7554Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 4.5C16.9706 4.5 21 5.567 21 6.75C21 7.933 16.9706 9 12 9C7.02944 9 3 7.933 3 6.75C3 5.567 7.02944 4.5 12 4.5Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M21 11.625C21 12.808 16.9706 13.875 12 13.875C7.02944 13.875 3 12.808 3 11.625" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/>
+              <path d="M22.5 17.25C22.5 18.433 18.4706 19.5 13.5 19.5C12.5513 19.5 11.6369 19.4444 10.7687 19.3421" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h1 class="text-lg font-bold leading-tight tracking-[-0.015em]">Api Connect</h1>
+        </div>
+
+        <nav class="flex flex-1 justify-center gap-8">
+          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="index.html">Inicio</a>
+          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="#">Colmenas</a>
+          <a class="text-text-color text-sm font-bold" href="history.html">Historial de Datos</a>
+          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="#">Mercado</a>
+          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="#">Comunidad</a>
+        </nav>
+
+        <div class="flex items-center justify-end gap-4">
+          <button class="flex h-10 w-10 items-center justify-center rounded-full bg-accent-color hover:bg-[color-mix(in_oklab,var(--accent-color),black 6%)] transition-colors">
+            <span class="material-symbols-outlined text-2xl">notifications</span>
+          </button>
+          <div class="size-10 rounded-full bg-cover bg-center"
+               style='background-image:url("https://lh3.googleusercontent.com/aida-public/AB6AXuDuCiFBVz139HxD6O-lhlftIHyzEyqrnO5oUn-mFCzJUbePcqG86VnLAiU2PKl-6f19ZLnfk-U8rKc89AQVw9GYXf3whiqJ0xAAo3KwB_XK2LA-_sntETLn5VcBi5HOT_3i9__KzjMZWBho3QEGqNbji-72CeE5PDCwxjg9d-O4gRIGdrUpMD3EV4bLut_isi5gZptpsXK7DEd_y3h5R8soIfXk9Mzf-LVC1Yk2ttxaqtvVnye230IF-WyaLx5jVU0CYrvslAsZGds");'></div>
+        </div>
+      </header>
+
+      <!-- Main -->
+      <main class="flex flex-1 justify-center py-8 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-7xl">
+          <div class="mb-8">
+            <h2 class="text-4xl font-bold tracking-tighter">Historial de Datos</h2>
+            <p class="text-subtle-text-color mt-2">Explora el historial de datos de tus colmenas. Filtra por rango de fechas y exporta los datos para un análisis más profundo.</p>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Filtros -->
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div class="md:col-span-3">
+                <label class="relative block">
+                  <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-subtle-text-color">search</span>
+                  <input id="q" type="text" placeholder="Buscar por colmena..."
+                         class="w-full rounded-md border border-border-color bg-accent-color py-3 pl-12 pr-4 text-text-color placeholder:text-subtle-text-color focus-primary" />
+                </label>
+              </div>
+
+              <div>
+                <label class="block">
+                  <span class="mb-2 block text-sm font-medium">Fecha de inicio</span>
+                  <input id="from" type="date" class="w-full rounded-md border border-border-color bg-secondary-color py-3 px-4 text-text-color placeholder:text-subtle-text-color focus-primary" />
+                </label>
+              </div>
+
+              <div>
+                <label class="block">
+                  <span class="mb-2 block text-sm font-medium">Fecha de fin</span>
+                  <input id="to" type="date" class="w-full rounded-md border border-border-color bg-secondary-color py-3 px-4 text-text-color placeholder:text-subtle-text-color focus-primary" />
+                </label>
+              </div>
+
+              <div class="flex items-end gap-4">
+                <button id="btnFilter" class="flex h-12 flex-1 items-center justify-center rounded-md bg-accent-color px-6 text-sm font-bold transition-colors hover:bg-[color-mix(in_oklab,var(--accent-color),black 6%)]">Filtrar</button>
+                <button id="btnExport" class="flex h-12 flex-1 items-center justify-center gap-2 rounded-md bg-[var(--primary-color)] px-6 text-sm font-bold transition-opacity hover:opacity-90">
+                  <span class="material-symbols-outlined">download</span>Exportar
+                </button>
+              </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="space-y-6">
+              <div>
+                <h3 class="mb-4 text-2xl font-bold tracking-tight">Datos Históricos</h3>
+                <div class="overflow-x-auto rounded-md border border-border-color bg-secondary-color">
+                  <table id="tbl" class="w-full text-left">
+                    <thead>
+                      <tr class="border-b border-border-color bg-accent-color/50">
+                        <th class="px-6 py-4 text-sm font-semibold">Colmena</th>
+                        <th class="px-6 py-4 text-sm font-semibold">Fecha</th>
+                        <th class="px-6 py-4 text-sm font-semibold">Temperatura (°C)</th>
+                        <th class="px-6 py-4 text-sm font-semibold">Humedad (%)</th>
+                        <th class="px-6 py-4 text-sm font-semibold">Peso (kg)</th>
+                        <th class="px-6 py-4 text-sm font-semibold">Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border-color">
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">Colmena A1</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">2024-07-26</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">32</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">65</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">25</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">Saludable</span></td>
+                      </tr>
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">Colmena B2</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">2024-07-26</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">30</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">70</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">22</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">Necesita atención</span></td>
+                      </tr>
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">Colmena C3</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">2024-07-25</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">31</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">68</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">24</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">Saludable</span></td>
+                      </tr>
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">Colmena A1</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">2024-07-25</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">33</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">62</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">26</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">Saludable</span></td>
+                      </tr>
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium">Colmena B2</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">2024-07-24</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">29</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">72</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-subtle-text-color">21</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">Necesita atención</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Tarjetas de tendencia (decorativas) -->
+              <div>
+                <h3 class="mb-4 text-2xl font-bold tracking-tight">Análisis de Tendencias</h3>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div class="flex flex-col gap-4 rounded-md border border-border-color bg-secondary-color p-6">
+                    <div><p class="text-base font-medium">Temperatura Promedio</p><p class="text-4xl font-bold tracking-tighter">31°C</p></div>
+                    <div class="flex items-center gap-2">
+                      <p class="text-sm text-subtle-text-color">Últimos 7 días</p>
+                      <div class="flex items-center gap-1 text-sm font-medium text-green-600"><span class="material-symbols-outlined text-base">arrow_upward</span><span>+2%</span></div>
+                    </div>
+                    <div class="h-48">
+                      <svg viewBox="0 0 472 150" width="100%" height="100%" preserveAspectRatio="none" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="var(--primary-color)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V150H0V109Z" fill="url(#g1)"/>
+                        <defs><linearGradient id="g1" x1="236" y1="1" x2="236" y2="150" gradientUnits="userSpaceOnUse"><stop stop-color="var(--primary-color)" stop-opacity=".2"/><stop offset="1" stop-color="var(--primary-color)" stop-opacity="0"/></linearGradient></defs>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-4 rounded-md border border-border-color bg-secondary-color p-6">
+                    <div><p class="text-base font-medium">Humedad Promedio</p><p class="text-4xl font-bold tracking-tighter">68%</p></div>
+                    <div class="flex items-center gap-2">
+                      <p class="text-sm text-subtle-text-color">Últimos 7 días</p>
+                      <div class="flex items-center gap-1 text-sm font-medium text-red-600"><span class="material-symbols-outlined text-base">arrow_downward</span><span>-3%</span></div>
+                    </div>
+                    <div class="h-48">
+                      <svg viewBox="0 0 472 150" width="100%" height="100%" preserveAspectRatio="none" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="var(--primary-color)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V150H0V109Z" fill="url(#g2)"/>
+                        <defs><linearGradient id="g2" x1="236" y1="1" x2="236" y2="150" gradientUnits="userSpaceOnUse"><stop stop-color="var(--primary-color)" stop-opacity=".2"/><stop offset="1" stop-color="var(--primary-color)" stop-opacity="0"/></linearGradient></defs>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- /space-y-6 -->
+          </div> <!-- /space-y-6 -->
+        </div> <!-- /container -->
+      </main>
+    </div>
+  </div>
+
+  <!-- JS: filtro simple + exportar CSV -->
+  <script>
+    const $ = (s, c=document) => c.querySelector(s);
+    const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
+
+    const q = $("#q");
+    const from = $("#from");
+    const to = $("#to");
+    const btnFilter = $("#btnFilter");
+    const btnExport = $("#btnExport");
+    const table = $("#tbl");
+    const rows = $$("#tbl tbody tr");
+
+    function parseDate(iso){ const d = new Date(iso); return isNaN(d) ? null : d; }
+
+    function applyFilters(){
+      const term = q.value.trim().toLowerCase();
+      const dFrom = from.value ? parseDate(from.value) : null;
+      const dTo   = to.value ? parseDate(to.value) : null;
+
+      rows.forEach(tr => {
+        const [hiveCell, dateCell] = [tr.cells[0], tr.cells[1]];
+        const hive = hiveCell.textContent.trim().toLowerCase();
+        const dateText = dateCell.textContent.trim();
+        const d = parseDate(dateText);
+
+        let ok = true;
+        if (term && !hive.includes(term)) ok = false;
+        if (ok && dFrom && (!d || d < dFrom)) ok = false;
+        if (ok && dTo && (!d || d > new Date(dTo.getFullYear(), dTo.getMonth(), dTo.getDate(), 23, 59, 59))) ok = false;
+
+        tr.style.display = ok ? "" : "none";
+      });
+    }
+
+    function exportCSV(){
+      const visibleRows = $$("#tbl tbody tr").filter(tr => tr.style.display !== "none");
+      const headers = $$("#tbl thead th").map(th => th.textContent.trim());
+      const data = visibleRows.map(tr => Array.from(tr.cells).map(td => td.textContent.trim()));
+
+      const csv = [headers, ...data]
+        .map(row => row.map(v => `"${v.replace(/"/g,'""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `historial_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    btnFilter.addEventListener("click", (e)=>{ e.preventDefault(); applyFilters(); });
+    [q, from, to].forEach(el => el.addEventListener("input", applyFilters));
+    btnExport.addEventListener("click", (e)=>{ e.preventDefault(); exportCSV(); });
+  </script>
+</body>
+</html>

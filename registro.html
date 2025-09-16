@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <title>Api Connect — Registro</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style type="text/tailwindcss">
+    :root { --primary-color: #f2b90d; }
+    .honeycomb {
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+  </style>
+</head>
+<body class="bg-[#fcfbf8] font-['Work_Sans']">
+  <div class="relative flex size-full min-h-screen flex-col overflow-x-hidden" style='font-family: "Work Sans","Noto Sans",sans-serif;'>
+    <header class="flex items-center justify-between border-b border-b-[#f4f0e7] px-10 py-3">
+      <div class="flex items-center gap-3 text-[#1c180d]">
+        <div class="w-8 h-8 honeycomb bg-amber-400 flex items-center justify-center">
+          <span class="material-symbols-outlined text-white">hive</span>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight">Api Connect</h1>
+      </div>
+      <nav class="flex items-center gap-8">
+        <a class="text-sm font-medium hover:text-[var(--primary-color)] transition-colors" href="#">Inicio</a>
+        <a class="text-sm font-medium hover:text-[var(--primary-color)] transition-colors" href="#">Funciones</a>
+        <a class="text-sm font-medium hover:text-[var(--primary-color)] transition-colors" href="#">Precios</a>
+        <a class="text-sm font-medium hover:text-[var(--primary-color)] transition-colors" href="#">Contacto</a>
+        <a class="h-10 px-5 rounded-lg bg-[#f4f0e7] text-sm font-bold hover:bg-amber-100 transition-colors" href="login.html">
+          Iniciar sesión
+        </a>
+      </nav>
+    </header>
+
+    <main class="flex flex-1 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div class="w-full max-w-md space-y-8">
+        <div class="text-center">
+          <h2 class="mt-6 text-3xl font-bold tracking-tight text-[#1c180d]">¡Regístrate en Api Connect!</h2>
+          <p class="mt-2 text-sm text-[#9c8749]">Elige tu rol para comenzar y únete a nuestra colmena.</p>
+        </div>
+
+        <form class="mt-8 space-y-6" method="POST" action="#">
+          <div class="grid grid-cols-2 gap-4">
+            <label class="relative flex items-center justify-center p-4 rounded-lg border-2 border-transparent cursor-pointer bg-[#f4f0e7] text-[#1c180d] has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-amber-50 transition-all">
+              <input class="sr-only" type="radio" name="role" value="apicultor" checked />
+              <div class="text-center">
+                <span class="material-symbols-outlined text-4xl text-[var(--primary-color)]">person</span>
+                <span class="block text-sm font-medium mt-2">Apicultor</span>
+              </div>
+            </label>
+
+            <label class="relative flex items-center justify-center p-4 rounded-lg border-2 border-transparent cursor-pointer bg-[#f4f0e7] text-[#1c180d] has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-amber-50 transition-all">
+              <input class="sr-only" type="radio" name="role" value="cooperativa" />
+              <div class="text-center">
+                <span class="material-symbols-outlined text-4xl text-[var(--primary-color)]">groups</span>
+                <span class="block text-sm font-medium mt-2">Cooperativa</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="space-y-4 rounded-md">
+            <div>
+              <label for="full-name" class="sr-only">Nombre completo</label>
+              <input id="full-name" name="full-name" type="text" required placeholder="Nombre completo"
+                     class="block w-full rounded-lg bg-[#f4f0e7] px-3 py-4 text-[#1c180d] placeholder-[#9c8749] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]" />
+            </div>
+            <div>
+              <label for="email-address" class="sr-only">Correo electrónico</label>
+              <input id="email-address" name="email" type="email" autocomplete="email" required placeholder="Correo electrónico"
+                     class="block w-full rounded-lg bg-[#f4f0e7] px-3 py-4 text-[#1c180d] placeholder-[#9c8749] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]" />
+            </div>
+            <div>
+              <label for="password" class="sr-only">Contraseña</label>
+              <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="Contraseña"
+                     class="block w-full rounded-lg bg-[#f4f0e7] px-3 py-4 text-[#1c180d] placeholder-[#9c8749] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]" />
+            </div>
+            <div>
+              <label for="confirm-password" class="sr-only">Confirmar contraseña</label>
+              <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required placeholder="Confirmar contraseña"
+                     class="block w-full rounded-lg bg-[#f4f0e7] px-3 py-4 text-[#1c180d] placeholder-[#9c8749] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]" />
+            </div>
+          </div>
+
+          <button type="submit" class="w-full rounded-lg bg-[var(--primary-color)] py-3 px-4 text-base font-bold text-[#1c180d] hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]">
+            Registrarse
+          </button>
+
+          <p class="text-center text-sm text-[#9c8749]">
+            ¿Ya tienes una cuenta?
+            <a class="font-medium text-[var(--primary-color)] hover:text-amber-600" href="login.html">Inicia sesión</a>
+          </p>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

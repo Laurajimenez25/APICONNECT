@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Configuración de Umbrales</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    :root { --primary-color:#f2b90d; --bg:#fcfbf8; --ink:#1c180d; --muted:#6b7280; --border:#e8e2ce; }
+    body{ font-family:"Work Sans","Noto Sans",sans-serif; background:var(--bg); color:var(--ink); }
+    .material-symbols-outlined{ font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  </style>
+</head>
+<body class="bg-[var(--bg)]">
+  <div class="relative flex min-h-screen flex-col">
+    <header class="flex items-center justify-between border-b border-[var(--border)] px-10 py-3">
+      <div class="flex items-center gap-3">
+        <svg class="size-8 text-[var(--primary-color)]" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z"/></svg>
+        <h1 class="text-xl font-bold">Api Connect</h1>
+      </div>
+      <nav class="flex items-center gap-6 text-sm font-medium text-gray-700">
+        <a class="hover:text-[var(--primary-color)]" href="index.html">Inicio</a>
+        <a class="hover:text-[var(--primary-color)]" href="dashboard.html">Panel</a>
+        <a class="hover:text-[var(--primary-color)]" href="history.html">Historial</a>
+        <a class="font-bold" href="thresholds.html">Configuración</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <button class="relative rounded-full p-2 hover:bg-gray-100" title="Notificaciones">
+          <span class="material-symbols-outlined text-gray-600">notifications</span>
+          <span class="absolute top-1 right-1 inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+        </button>
+        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image:url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8TBvIZzsr6TIoWMXxDTiy8AW0_643yj0aPPpFeGl1UzXegmM5lHvAC6Sa25zWpSjbAFnSS7zKmi3ZtAwxV7vjvlg2dVld8QezTTTafaFmPN9U0z1fkDAXMl2BiTkHeODSI8FBJXtyRiuPqZuJYyULpOUrO3R5QoXR3aS1Fvyf_BnGfZmJT4f4muYNp32oZXS45r1LlgP1GA6cWAaRU4Z4crJP-P2UQ5bmJ8f5xL2dViok3yAetylLMT9jW9s_NTZBbDm6rVtl_as");'></div>
+      </div>
+    </header>
+
+    <main class="flex-1 px-10 py-8 lg:px-20 xl:px-40">
+      <div class="mx-auto max-w-4xl">
+        <div class="mb-8">
+          <h2 class="text-4xl font-bold tracking-tight">Configuración de Umbrales</h2>
+          <p class="mt-2 text-gray-600">Define los rangos críticos para monitorear la salud de tus colmenas.</p>
+        </div>
+
+        <div class="space-y-12">
+
+          <!-- Temperatura -->
+          <section class="rounded-lg border border-[var(--border)] bg-white shadow-sm">
+            <div class="p-6 flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-bold">Temperatura (°C)</h3>
+                <p class="mt-1 text-sm text-gray-600">Establece el rango de temperatura ideal.</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-400" aria-hidden="true">thermostat</span>
+            </div>
+            <div class="border-t border-[var(--border)] bg-[var(--bg)] p-6">
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <label class="block">
+                  <span class="block text-sm font-medium">Mínimo</span>
+                  <input id="temp-min" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="10" />
+                </label>
+                <label class="block">
+                  <span class="block text-sm font-medium">Máximo</span>
+                  <input id="temp-max" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="35" />
+                </label>
+              </div>
+              <div class="relative mt-6">
+                <div class="relative h-2 rounded-full bg-[var(--border)]">
+                  <div id="temp-bar" class="absolute h-2 rounded-full bg-[var(--primary-color)]" style="left:20%;right:30%;"></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-gray-500"><span>0°C</span><span>50°C</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Humedad -->
+          <section class="rounded-lg border border-[var(--border)] bg-white shadow-sm">
+            <div class="p-6 flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-bold">Humedad (%)</h3>
+                <p class="mt-1 text-sm text-gray-600">Configura los niveles de humedad.</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-400" aria-hidden="true">humidity_percentage</span>
+            </div>
+            <div class="border-t border-[var(--border)] bg-[var(--bg)] p-6">
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <label class="block">
+                  <span class="block text-sm font-medium">Mínimo</span>
+                  <input id="hum-min" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="40" />
+                </label>
+                <label class="block">
+                  <span class="block text-sm font-medium">Máximo</span>
+                  <input id="hum-max" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="70" />
+                </label>
+              </div>
+              <div class="relative mt-6">
+                <div class="relative h-2 rounded-full bg-[var(--border)]">
+                  <div id="hum-bar" class="absolute h-2 rounded-full bg-[var(--primary-color)]" style="left:40%;right:30%;"></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-gray-500"><span>0%</span><span>100%</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Peso -->
+          <section class="rounded-lg border border-[var(--border)] bg-white shadow-sm">
+            <div class="p-6 flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-bold">Peso (kg)</h3>
+                <p class="mt-1 text-sm text-gray-600">Define umbrales de peso.</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-400" aria-hidden="true">scale</span>
+            </div>
+            <div class="border-t border-[var(--border)] bg-[var(--bg)] p-6">
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <label class="block">
+                  <span class="block text-sm font-medium">Mínimo</span>
+                  <input id="w-min" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="5" />
+                </label>
+                <label class="block">
+                  <span class="block text-sm font-medium">Máximo</span>
+                  <input id="w-max" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="20" />
+                </label>
+              </div>
+              <div class="relative mt-6">
+                <div class="relative h-2 rounded-full bg-[var(--border)]">
+                  <div id="w-bar" class="absolute h-2 rounded-full bg-[var(--primary-color)]" style="left:10%;right:60%;"></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-gray-500"><span>0 kg</span><span>60 kg</span></div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-12 flex justify-end gap-4">
+          <button id="btn-cancel" class="h-10 px-4 rounded-lg bg-gray-200 font-bold hover:bg-gray-300">Cancelar</button>
+          <button id="btn-save" class="h-10 px-4 rounded-lg bg-[var(--primary-color)] font-bold hover:brightness-110">Guardar Cambios</button>
+        </div>
+
+        <!-- Toast éxito -->
+        <div id="toast" class="mt-6 hidden rounded-md bg-green-50 p-4">
+          <div class="flex">
+            <span class="material-symbols-outlined text-green-500 mr-2">check_circle</span>
+            <p class="text-green-800 text-sm">¡Configuración guardada!</p>
+          </div>
+        </div>
+
+        <!-- Toast error -->
+        <div id="toast-err" class="mt-4 hidden rounded-md bg-red-50 p-4">
+          <div class="flex">
+            <span class="material-symbols-outlined text-red-500 mr-2">error</span>
+            <p id="err-msg" class="text-red-800 text-sm">Revisa los valores.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Rangos base (ajústalos a tu dominio si lo necesitas)
+    const LIMITS = {
+      temp: { min: 0, max: 50 },
+      hum:  { min: 0, max: 100 },
+      w:    { min: 0, max: 60 }
+    };
+
+    // Helpers
+    const $ = (id) => document.getElementById(id);
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const pct = (v, a, b) => ((v - a) / (b - a)) * 100;
+
+    // Inputs
+    const inputs = {
+      tmin: $('temp-min'), tmax: $('temp-max'),
+      hmin: $('hum-min'),  hmax: $('hum-max'),
+      wmin: $('w-min'),    wmax: $('w-max')
+    };
+    const bars = { t: $('temp-bar'), h: $('hum-bar'), w: $('w-bar') };
+
+    function loadFromStorage(){
+      const raw = localStorage.getItem('api-connect-thresholds');
+      if(!raw) return;
+      try{
+        const cfg = JSON.parse(raw);
+        if(cfg.temp){ inputs.tmin.value = cfg.temp.min; inputs.tmax.value = cfg.temp.max; }
+        if(cfg.hum){  inputs.hmin.value = cfg.hum.min;  inputs.hmax.value = cfg.hum.max; }
+        if(cfg.w){    inputs.wmin.value = cfg.w.min;    inputs.wmax.value = cfg.w.max; }
+      }catch(_){}
+    }
+
+    function currentConfig(){
+      return {
+        temp: { min: Number(inputs.tmin.value), max: Number(inputs.tmax.value) },
+        hum:  { min: Number(inputs.hmin.value), max: Number(inputs.hmax.value) },
+        w:    { min: Number(inputs.wmin.value), max: Number(inputs.wmax.value) }
+      };
+    }
+
+    function validate(cfg){
+      const errs = [];
+      // Temp
+      if(cfg.temp.min >= cfg.temp.max) errs.push('Temperatura: el mínimo debe ser menor que el máximo.');
+      if(cfg.temp.min < LIMITS.temp.min || cfg.temp.max > LIMITS.temp.max) errs.push(`Temperatura: fuera de ${LIMITS.temp.min}–${LIMITS.temp.max} °C.`);
+      // Hum
+      if(cfg.hum.min >= cfg.hum.max) errs.push('Humedad: el mínimo debe ser menor que el máximo.');
+      if(cfg.hum.min < LIMITS.hum.min || cfg.hum.max > LIMITS.hum.max) errs.push(`Humedad: fuera de ${LIMITS.hum.min}–${LIMITS.hum.max} %.`);
+      // Peso
+      if(cfg.w.min >= cfg.w.max) errs.push('Peso: el mínimo debe ser menor que el máximo.');
+      if(cfg.w.min < LIMITS.w.min || cfg.w.max > LIMITS.w.max) errs.push(`Peso: fuera de ${LIMITS.w.min}–${LIMITS.w.max} kg.`);
+      return errs;
+    }
+
+    function updateBars(){
+      const cfg = currentConfig();
+      const lt = LIMITS.temp, lh = LIMITS.hum, lw = LIMITS.w;
+
+      const lTemp = clamp(pct(cfg.temp.min, lt.min, lt.max), 0, 100);
+      const rTemp = 100 - clamp(pct(cfg.temp.max, lt.min, lt.max), 0, 100);
+      bars.t.style.left  = lTemp + '%';
+      bars.t.style.right = rTemp + '%';
+
+      const lHum = clamp(pct(cfg.hum.min, lh.min, lh.max), 0, 100);
+      const rHum = 100 - clamp(pct(cfg.hum.max, lh.min, lh.max), 0, 100);
+      bars.h.style.left  = lHum + '%';
+      bars.h.style.right = rHum + '%';
+
+      const lW = clamp(pct(cfg.w.min, lw.min, lw.max), 0, 100);
+      const rW = 100 - clamp(pct(cfg.w.max, lw.min, lw.max), 0, 100);
+      bars.w.style.left  = lW + '%';
+      bars.w.style.right = rW + '%';
+    }
+
+    function showToast(ok, msg=''){
+      const okBox = $('toast');
+      const errBox = $('toast-err');
+      const errMsg = $('err-msg');
+      if(ok){
+        errBox.classList.add('hidden');
+        okBox.classList.remove('hidden');
+        setTimeout(()=> okBox.classList.add('hidden'), 2000);
+      }else{
+        errMsg.textContent = msg || 'Revisa los valores.';
+        $('toast').classList.add('hidden');
+        errBox.classList.remove('hidden');
+        setTimeout(()=> errBox.classList.add('hidden'), 3500);
+      }
+    }
+
+    // Eventos
+    ['input','change'].forEach(evt=>{
+      Object.values(inputs).forEach(el => el.addEventListener(evt, updateBars));
+    });
+
+    $('btn-save').addEventListener('click', ()=>{
+      const cfg = currentConfig();
+      const errs = validate(cfg);
+      if(errs.length){
+        showToast(false, errs[0]);
+        return;
+      }
+      localStorage.setItem('api-connect-thresholds', JSON.stringify(cfg));
+      showToast(true);
+    });
+
+    $('btn-cancel').addEventListener('click', ()=>{
+      loadFromStorage();
+      updateBars();
+    });
+
+    // Init
+    loadFromStorage();
+    updateBars();
+  </script>
+</body>
+</html>

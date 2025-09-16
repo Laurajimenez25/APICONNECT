@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Lotes y QR</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Work+Sans:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Librería mini para generar QR (cliente) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+  <style>
+    :root{ --ink:#1C180D; --brand:#F2B90D; --bg:#FCFBF8; }
+    body{ font-family:"Work Sans","Noto Sans",sans-serif; background:var(--bg); color:var(--ink); }
+    .tab-active{ border-color:var(--brand); color:var(--ink); font-weight:600; }
+  </style>
+</head>
+<body class="bg-[var(--bg)]">
+  <div class="relative flex min-h-screen flex-col">
+    <div class="flex h-full grow">
+      <!-- Sidebar -->
+      <aside class="flex flex-col w-64 bg-white border-r border-gray-200">
+        <div class="flex items-center gap-2 p-4 border-b border-gray-200">
+          <img class="h-10 w-10" alt="Api Connect Logo"
+               src="https://lh3.googleusercontent.com/aida-public/AB6AXuA68ThcBsoyUmlB9RVEXYNlZaK6L2Fe-1oJtA-vZZAkJ1VLtRHPOR09YeKwvfk3xnl8x9GWToimR8x2WYmZzufCO_c57M9JHZF6u9OGhzdHaDz1ihbKwbn6vheXZ4za9E-Rg1NZ8kxMjUMUCEVSTRi4hI5NXmaU2DgjCjjoL7xlT4GL6dMqw1vDa9O7sSdjE-1ZGfA9yF_Qiv35uws57SmzBKI4UBtX6l9QDWm5lqj4Gsu8QSLphRAk8sZS-_S_vOWpGN1vIAAGFv4"/>
+          <h1 class="text-xl font-bold">Api Connect</h1>
+        </div>
+        <nav class="flex flex-col gap-2 p-4">
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md text-gray-700 hover:bg-yellow-50" href="dashboard.html">
+            <span class="material-symbols-outlined">dashboard</span><span class="text-sm font-medium">Dashboard</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md text-gray-700 hover:bg-yellow-50" href="#">
+            <span class="material-symbols-outlined">hive</span><span class="text-sm font-medium">Colmenas</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[#F2B90D]/20 text-[var(--ink)]" href="lotes.html">
+            <span class="material-symbols-outlined">inventory_2</span><span class="text-sm font-medium">Producción</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md text-gray-700 hover:bg-yellow-50" href="history.html">
+            <span class="material-symbols-outlined">history</span><span class="text-sm font-medium">Historial</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md text-gray-700 hover:bg-yellow-50" href="thresholds.html">
+            <span class="material-symbols-outlined">tune</span><span class="text-sm font-medium">Umbrales</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main -->
+      <main class="flex-1 p-8">
+        <header class="mb-8">
+          <h2 class="text-4xl font-bold">Gestión de Producción</h2>
+          <div class="mt-4 border-b border-gray-200">
+            <nav class="-mb-px flex gap-8">
+              <a class="py-4 px-1 border-b-2 tab-active" href="#">Lotes y QR</a>
+              <a class="py-4 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300" href="#">Inventario</a>
+            </nav>
+          </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Form alta -->
+          <section class="md:col-span-1">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+              <h3 class="text-2xl font-bold mb-6">Crear Nuevo Lote</h3>
+              <form id="frm" class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium mb-1" for="origen">Origen de la Miel</label>
+                  <input id="origen" name="origen" type="text" placeholder="Ej: Campo de Flores Silvestres"
+                         class="form-input w-full rounded-md border-gray-300 focus:border-yellow-400 focus:ring-yellow-200"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1" for="fecha">Fecha de Cosecha</label>
+                  <input id="fecha" name="fecha" type="date"
+                         class="form-input w-full rounded-md border-gray-300 focus:border-yellow-400 focus:ring-yellow-200"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1" for="peso">Peso del Lote (kg)</label>
+                  <input id="peso" name="peso" type="number" step="0.1" min="0" placeholder="Ej: 50"
+                         class="form-input w-full rounded-md border-gray-300 focus:border-yellow-400 focus:ring-yellow-200"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1" for="notas">Notas Adicionales</label>
+                  <textarea id="notas" name="notas" rows="4" placeholder="Agregar notas sobre el lote"
+                            class="form-textarea w-full rounded-md border-gray-300 focus:border-yellow-400 focus:ring-yellow-200"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 pt-4">
+                  <button type="button" id="btnCancel" class="px-6 py-2 rounded-md text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200">Cancelar</button>
+                  <button type="submit" class="px-6 py-2 rounded-md text-sm font-semibold text-[var(--ink)] bg-[var(--brand)] hover:bg-yellow-500">Crear Lote</button>
+                </div>
+              </form>
+              <p id="msg" class="mt-3 text-sm text-emerald-700 hidden">¡Lote creado!</p>
+            </div>
+          </section>
+
+          <!-- Tabla -->
+          <section class="md:col-span-2">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+              <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold">Lotes Existentes</h3>
+                <div class="flex gap-2">
+                  <input id="search" type="text" placeholder="Buscar por origen o ID…" class="form-input rounded-md border-gray-300"/>
+                </div>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200" id="tbl">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Lote ID</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Origen</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fecha Cosecha</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Peso (kg)</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
+                      <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200" id="tbody">
+                    <!-- filas dinámicas -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal QR -->
+  <div id="qrModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h4 class="text-xl font-bold">QR del Lote</h4>
+        <button id="qrClose" class="p-1 rounded hover:bg-gray-100">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div id="qrContainer" class="grid place-items-center py-4">
+        <!-- QR here -->
+      </div>
+      <div class="mt-6 flex justify-end gap-3">
+        <a id="btnDownloadQR" download class="px-4 py-2 rounded-md bg-[var(--brand)] font-semibold hover:brightness-110">Descargar PNG</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---- Storage helpers ----
+    const KEY = 'api-connect-lotes';
+    const load = () => JSON.parse(localStorage.getItem(KEY) || '[]');
+    const save = (arr) => localStorage.setItem(KEY, JSON.stringify(arr));
+
+    // ---- DOM refs ----
+    const frm = document.getElementById('frm');
+    const msg = document.getElementById('msg');
+    const tbody = document.getElementById('tbody');
+    const search = document.getElementById('search');
+
+    // Modal QR
+    const qrModal = document.getElementById('qrModal');
+    const qrClose = document.getElementById('qrClose');
+    const qrContainer = document.getElementById('qrContainer');
+    const btnDownloadQR = document.getElementById('btnDownloadQR');
+
+    // ---- Utils ----
+    function nextId(existing) {
+      const y = new Date().getFullYear();
+      const seq = (existing
+        .filter(x => String(x.id).startsWith(String(y)))
+        .map(x => Number(x.id.split('-')[1]) || 0)
+        .reduce((a,b)=>Math.max(a,b), 0)) + 1;
+      return `${y}-${String(seq).padStart(3,'0')}`;
+    }
+
+    function badge(estado){
+      const map = {
+        'Activo': 'bg-green-100 text-green-800',
+        'Cosechado': 'bg-blue-100 text-blue-800',
+        'Inactivo': 'bg-gray-100 text-gray-800'
+      };
+      const cls = map[estado] || map['Inactivo'];
+      return `<span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${cls}">${estado}</span>`;
+    }
+
+    function renderRows(list){
+      const term = search.value.trim().toLowerCase();
+      tbody.innerHTML = list
+        .filter(r => !term || r.id.toLowerCase().includes(term) || r.origen.toLowerCase().includes(term))
+        .map(r => `
+          <tr data-id="${r.id}">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${r.id}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${r.origen}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${r.fecha}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${r.peso}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${badge(r.estado)}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              ${
+                r.estado === 'Activo'
+                ? `<button class="text-[#F2B90D] hover:text-yellow-600 inline-flex items-center gap-1 btnQR">
+                     <span class="material-symbols-outlined text-base">qr_code_2</span><span>Generar QR</span>
+                   </button>`
+                : `<span class="text-gray-400 inline-flex items-center gap-1 cursor-not-allowed">
+                     <span class="material-symbols-outlined text-base">qr_code_2</span><span>Generar QR</span>
+                   </span>`
+              }
+            </td>
+          </tr>
+        `).join('');
+    }
+
+    function showToast(){
+      msg.classList.remove('hidden');
+      setTimeout(()=>msg.classList.add('hidden'), 1800);
+    }
+
+    // ---- QR modal ----
+    function openQR(data){
+      // Limpia contenedor y crea QR
+      qrContainer.innerHTML = '<div id="qr" class="p-2 bg-white rounded"></div>';
+      const el = document.getElementById('qr');
+      // Contenido: JSON compacto con datos del lote (puedes agregar firma si lo deseas)
+      const content = JSON.stringify({
+        tipo:'lote',
+        id: data.id,
+        origen: data.origen,
+        fecha: data.fecha,
+        peso: data.peso,
+        estado: data.estado
+      });
+
+      // Genera QR
+      new QRCode(el, { text: content, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+
+      // Prepara botón de descarga (convierte el canvas a PNG)
+      setTimeout(() => {
+        const canvas = el.querySelector('canvas');
+        const img = el.querySelector('img');
+        const src = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+        btnDownloadQR.href = src || '#';
+        btnDownloadQR.download = `QR_${data.id}.png`;
+      }, 100);
+
+      qrModal.classList.remove('hidden');
+      qrModal.classList.add('flex');
+    }
+
+    function closeQR(){
+      qrModal.classList.add('hidden');
+      qrModal.classList.remove('flex');
+    }
+
+    // ---- Eventos ----
+    document.getElementById('btnCancel').addEventListener('click', () => frm.reset());
+    qrClose.addEventListener('click', closeQR);
+    qrModal.addEventListener('click', (e)=>{ if(e.target === qrModal) closeQR(); });
+    search.addEventListener('input', ()=> renderRows(load()));
+
+    // Alta de lote
+    frm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const origen = (document.getElementById('origen').value || '').trim();
+      const fecha = document.getElementById('fecha').value;
+      const peso  = Number(document.getElementById('peso').value);
+      const notas = (document.getElementById('notas').value || '').trim();
+
+      // Validaciones básicas
+      const errs = [];
+      if(!origen) errs.push('Origen requerido');
+      if(!fecha) errs.push('Fecha requerida');
+      if(!(peso >= 0)) errs.push('Peso inválido');
+
+      if(errs.length){
+        alert('Revisa el formulario:\n• ' + errs.join('\n• '));
+        return;
+      }
+
+      const list = load();
+      const id = nextId(list);
+      const row = { id, origen, fecha: formatFecha(fecha), peso: String(peso), estado:'Activo', notas };
+      list.push(row);
+      save(list);
+      renderRows(list);
+      frm.reset();
+      showToast();
+    });
+
+    // Delegación para botones QR en la tabla
+    tbody.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.btnQR');
+      if(!btn) return;
+      const tr = e.target.closest('tr');
+      const id = tr?.dataset?.id;
+      const lot = load().find(x => x.id === id);
+      if(lot) openQR(lot);
+    });
+
+    // Formato fecha (aaaa-mm-dd -> dd/mm/aaaa)
+    function formatFecha(iso){
+      const d = new Date(iso);
+      if(isNaN(d)) return iso;
+      const dd = String(d.getDate()).padStart(2,'0');
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const yy = d.getFullYear();
+      return `${dd}/${mm}/${yy}`;
+    }
+
+    // Seed inicial (si está vacío) — opcional
+    (function seed(){
+      const list = load();
+      if(list.length) return renderRows(list);
+      const sample = [
+        { id:`2023-001`, origen:'Campo de Flores Silvestres', fecha:'15/05/2023', peso:'50', estado:'Activo', notas:'' },
+        { id:`2023-002`, origen:'Bosque de Eucaliptos',      fecha:'20/06/2023', peso:'75', estado:'Cosechado', notas:'' },
+        { id:`2023-003`, origen:'Huerto de Cítricos',        fecha:'10/07/2023', peso:'60', estado:'Activo',   notas:'' },
+      ];
+      save(sample);
+      renderRows(sample);
+    })();
+  </script>
+</body>
+</html>
