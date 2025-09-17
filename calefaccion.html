@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Api Connect — Control de Calefacción</title>
+  <title>Api Connect — Calefacción</title>
 
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin/>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Work+Sans:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
-    :root{ --brand:#f2b90d; --ink:#1c180d; --muted:#6b7280; --bg:#fcfbf8; }
+    :root{  --primary-color:#f2b90d; --brand:#f2b90d; --ink:#1c180d; --muted:#6b7280; --bg:#fcfbf8; --border:#e5e7eb; }
     body{ font-family:"Work Sans","Noto Sans",sans-serif; background:var(--bg); color:var(--ink); }
     .switch{ width:56px; height:28px; border-radius:999px; position:relative; }
     .knob{ width:22px; height:22px; top:3px; left:3px; border-radius:999px; position:absolute; transition:transform .2s ease; }
@@ -19,29 +19,47 @@
 </head>
 <body>
   <div class="relative flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 hidden lg:flex flex-col bg-white border-r border-gray-200">
-      <div class="p-6">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-full" style="background:var(--brand)"></div>
-          <h1 class="text-xl font-bold">Api Connect</h1>
-        </div>
+    <!-- Sidebar SIN header -->
+    <aside class="w-64 bg-white border-r border-[var(--border)] p-6 flex flex-col">
+      <!-- Marca + logo circular -->
+      <div class="flex items-center gap-3 mb-6">
+        <img
+          src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"
+          alt="Logo Api Connect"
+          class="w-12 h-12 rounded-full object-cover shadow-md"
+        />
+        <h1 class="text-xl font-bold">Api Connect</h1>
       </div>
-      <nav class="flex-1 px-4 py-4 space-y-2">
-        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="dashboard.html">
-          <span class="material-symbols-outlined text-gray-500">dashboard</span><span class="text-sm font-medium">Panel</span>
+
+      <!-- Menú debajo de Api Connect -->
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">monitoring</span>
+          <span>Estado</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="history.html">
-          <span class="material-symbols-outlined text-gray-500">history</span><span class="text-sm font-medium">Historial</span>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">assessment</span>
+          <span>Reportes</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="lotes.html">
-          <span class="material-symbols-outlined text-gray-500">inventory_2</span><span class="text-sm font-medium">Producción</span>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Registro de lote</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100" href="thresholds.html">
-          <span class="material-symbols-outlined text-gray-500">tune</span><span class="text-sm font-medium">Umbrales</span>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">tune</span>
+          <span>Umbrales</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-2 bg-[var(--brand)]/20 text-[var(--ink)] rounded-lg" href="calefaccion.html">
-          <span class="material-symbols-outlined" style="color:var(--brand)">whatshot</span><span class="text-sm font-medium">Calefacción</span>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[var(--primary-color)] text-gray-900 font-semibold" href="#">
+          <span class="material-symbols-outlined">thermostat</span>
+          <span>Calefacción</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">recommend</span>
+          <span>Recomendaciones</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Comentarios</span>
         </a>
       </nav>
     </aside>
@@ -49,23 +67,37 @@
     <!-- Main -->
     <main class="flex-1 p-6 lg:p-10">
       <div class="max-w-5xl mx-auto">
-        <header class="mb-8">
-          <h2 class="text-4xl font-bold tracking-tight">Control de Calefacción</h2>
-          <p class="text-[var(--muted)] mt-2">Control manual/automático con historial y exportación a CSV.</p>
+        <!-- Header con perfil + notificaciones -->
+        <header class="mb-8 flex items-center justify-between">
+          <div>
+            <h2 class="text-4xl font-bold tracking-tight">Calefacción</h2>
+            <p class="text-[var(--muted)] mt-2">Control manual/automático con historial y exportación a CSV.</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <!-- Notificaciones -->
+            <button class="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200" aria-label="Notificaciones">
+              <span class="material-symbols-outlined text-2xl text-gray-700">notifications</span>
+              <span class="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+            </button>
+            <!-- Perfil sin foto -->
+            <button class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200" aria-label="Perfil">
+              <span class="material-symbols-outlined text-3xl text-gray-700">account_circle</span>
+            </button>
+          </div>
         </header>
 
         <!-- Panel de control -->
         <section class="bg-white border border-gray-200 rounded-lg shadow-sm">
           <div class="p-6 grid gap-6 md:grid-cols-2">
             <div class="space-y-3">
-              <h3 class="text-lg font-semibold">Calefacción de colmenas</h3>
+              <h3 class="text-lg font-semibold">Calefacción</h3>
               <p class="text-sm text-gray-600">Estado actual:
                 <span id="statusLabel" class="font-semibold text-green-600">Encendido</span>
                 <span id="modeLabel" class="ml-2 text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">Modo: Manual</span>
               </p>
               <div class="flex items-center gap-4">
                 <!-- Switch -->
-                <button id="switchBtn" class="switch bg-gray-200 has-[.on]:bg-[var(--brand)] rounded-full transition-colors relative" aria-pressed="true">
+                <button id="switchBtn" class="switch bg-gray-200 rounded-full transition-colors relative" aria-pressed="true">
                   <span id="knob" class="knob bg-white shadow"></span>
                 </button>
                 <div class="flex items-center gap-2">

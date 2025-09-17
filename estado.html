@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Dashboard</title>
+
+  <!-- Fuentes y estilos -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <style type="text/tailwindcss">
+    :root {
+      --primary-color: #f2b90d; /* Ámbar Api Connect */
+    }
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="bg-gray-50" style='font-family:"Work Sans","Noto Sans",sans-serif;'>
+  <div class="flex h-screen">
+   <!-- Sidebar -->
+<aside class="w-64 bg-white border-r border-gray-200 p-6 flex flex-col">
+  <div class="flex items-center gap-3 mb-8">
+  <!-- Imagen Logo Circular -->
+  <img src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"
+       alt="Logo Abeja Api Connect"
+       class="w-12 h-12 rounded-full object-cover shadow-md"/>
+  <h1 class="text-gray-800 text-lg font-bold">Api Connect</h1>
+</div>
+
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[var(--primary-color)] text-gray-900 font-semibold" href="#">
+          <span class="material-symbols-outlined">monitoring</span>
+          <span>Estado</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-600 font-medium" href="#">
+          <span class="material-symbols-outlined">assessment</span>
+          <span>Reportes</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-600 font-medium" href="#">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Registro de Lote</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-600 font-medium" href="#">
+          <span class="material-symbols-outlined">tune</span>
+          <span>Umbrales</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-600 font-medium" href="#">
+          <span class="material-symbols-outlined">thermostat</span>
+          <span>Calefacción</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-600 font-medium" href="#">
+          <span class="material-symbols-outlined">recommend</span>
+          <span>Recomendaciones</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-600 font-medium" href="#">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Comentarios</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <!-- Header -->
+      <header class="mb-8 flex justify-between items-center">
+        <h1 class="text-4xl font-bold text-gray-800">Estado</h1>
+        <div class="flex items-center gap-4">
+          <button class="relative">
+            <span class="material-symbols-outlined text-gray-600 text-2xl">notifications</span>
+            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+          </button>
+          <button>
+            <span class="material-symbols-outlined text-gray-600 text-3xl">account_circle</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Datos actuales -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">Datos Actuales</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-lg shadow-md flex items-center gap-4">
+            <span class="material-symbols-outlined text-4xl text-[var(--primary-color)]">device_thermostat</span>
+            <div>
+              <p class="text-gray-500 text-base font-medium">Temperatura</p>
+              <p class="text-gray-800 text-3xl font-bold">25°C</p>
+            </div>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md flex items-center gap-4">
+            <span class="material-symbols-outlined text-4xl text-[var(--primary-color)]">water_drop</span>
+            <div>
+              <p class="text-gray-500 text-base font-medium">Humedad</p>
+              <p class="text-gray-800 text-3xl font-bold">60%</p>
+            </div>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md flex items-center gap-4">
+            <span class="material-symbols-outlined text-4xl text-[var(--primary-color)]">schedule</span>
+            <div>
+              <p class="text-gray-500 text-base font-medium">Fecha/Hora</p>
+              <p class="text-gray-800 text-xl font-bold">26-07-24 14:30</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Alertas críticas -->
+      <section>
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">Alertas Críticas</h2>
+        <div class="space-y-4">
+          <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md flex items-center gap-4">
+            <span class="material-symbols-outlined text-3xl">error</span>
+            <div>
+              <p class="font-bold">Temperatura fuera de rango</p>
+              <p>La temperatura de la colmena está fuera del rango óptimo. Se recomienda revisar la ventilación.</p>
+            </div>
+          </div>
+          <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md flex items-center gap-4">
+            <span class="material-symbols-outlined text-3xl">warning</span>
+            <div>
+              <p class="font-bold">Humedad alta</p>
+              <p>La humedad dentro de la colmena es demasiado alta. Verifique la ventilación y considere medidas para reducir la humedad.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

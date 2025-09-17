@@ -12,8 +12,9 @@
 
   <style>
     :root{
-      --primary:#f2b90d; --bg:#fcfbf8; --ink:#1c180d; --muted:#706b5e; --accent:#e5e7eb;
+      --primary-color:#f2b90d; --bg:#fcfbf8; --ink:#1c180d; --muted:#706b5e; --accent:#e5e7eb;
       --ok:#16a34a; --warn:#f59e0b;
+      --border:#e8e2ce; /* añadido por si usas border-[var(--border)] */
     }
     body{ font-family:"Work Sans","Noto Sans",sans-serif; background:var(--bg); color:var(--ink); }
     .card-ok{ border:1px solid #bbf7d0; background:#f0fdf4; }
@@ -24,27 +25,47 @@
 <body>
   <div class="relative flex min-h-screen flex-col">
     <div class="flex grow">
-      <!-- Sidebar -->
-      <aside class="flex flex-col w-full lg:w-64 bg-[var(--bg)] p-4 shrink-0">
-        <div class="flex items-center gap-3 mb-8">
-          <img class="rounded-full size-10" alt="Api Connect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo_G5n2qj-AtjsBpj4fWvqM5-adZ3ydAOkO6tUmmrftlf3ddMGOAF_LhA3bNYR1FxX5h8p27BqfcHn5AiJ0uGLn8M4B8qV-wCaDz3mG-EcY9uBnXlYkRTmWw5_MG72dpx6UbblS2hNE-sY26FG0uteRs5z0DTwB2rxKJH4BW9919pi6LiiE5D_qX0NDlYZO0jB4J9ewgzc-FRJqvvc1JnTWw5YuOZjyErh2aFrYJ6l3tEegI6MOqk1fz6wmT0iuL7L5NPL1UVjR0A"/>
-          <h1 class="text-lg font-semibold">Api Connect</h1>
+      <!-- Sidebar SIN header -->
+      <aside class="w-64 bg-white border-r border-[var(--border)] p-6 flex flex-col">
+        <!-- Marca + logo circular -->
+        <div class="flex items-center gap-3 mb-6">
+          <img
+            src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"
+            alt="Logo Api Connect"
+            class="w-12 h-12 rounded-full object-cover shadow-md"
+          />
+          <h1 class="text-xl font-bold">Api Connect</h1>
         </div>
-        <nav class="flex-1 flex flex-col gap-2">
-          <a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-yellow-50" href="dashboard.html">
-            <span class="material-symbols-outlined text-[var(--muted)]">home</span><span class="text-sm font-medium">Panel</span>
+
+        <!-- Menú debajo de Api Connect -->
+        <nav class="flex flex-col gap-2">
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+            <span class="material-symbols-outlined">monitoring</span>
+            <span>Estado</span>
           </a>
-          <a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-yellow-50" href="history.html">
-            <span class="material-symbols-outlined text-[var(--muted)]">history</span><span class="text-sm font-medium">Historial</span>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+            <span class="material-symbols-outlined">assessment</span>
+            <span>Reportes</span>
           </a>
-          <a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-yellow-50" href="lotes.html">
-            <span class="material-symbols-outlined text-[var(--muted)]">inventory_2</span><span class="text-sm font-medium">Producción</span>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span>Registro de lote</span>
           </a>
-          <a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-yellow-50" href="thresholds.html">
-            <span class="material-symbols-outlined text-[var(--muted)]">tune</span><span class="text-sm font-medium">Umbrales</span>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+            <span class="material-symbols-outlined">tune</span>
+            <span>Umbrales</span>
           </a>
-          <a class="flex items-center gap-3 px-3 py-2 rounded-md bg-[var(--primary)]" href="recomendaciones.html">
-            <span class="material-symbols-outlined">lightbulb</span><span class="text-sm font-semibold">Recomendaciones</span>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+            <span class="material-symbols-outlined">thermostat</span>
+            <span>Calefaccion</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[var(--primary-color)] text-gray-900 font-semibold" href="#">
+            <span class="material-symbols-outlined">recommend</span>
+            <span>Recomendaciones</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+            <span class="material-symbols-outlined">chat</span>
+            <span>Comentarios</span>
           </a>
         </nav>
       </aside>
@@ -52,16 +73,28 @@
       <!-- Main -->
       <main class="flex-1 p-6 lg:p-10 bg-white rounded-tl-3xl">
         <div class="max-w-5xl mx-auto">
-          <header class="mb-8">
-            <h2 class="text-4xl font-bold tracking-tight">Recomendaciones del Sistema</h2>
-            <p class="text-[var(--muted)] mt-2">Estimaciones inteligentes basadas en tus umbrales y métricas recientes.</p>
+          <!-- Header del contenido con iconos -->
+          <header class="mb-8 flex items-center justify-between">
+            <div>
+              <h2 class="text-4xl font-bold tracking-tight">Recomendaciones</h2>
+              <p class="text-[var(--muted)] mt-2">Estimaciones inteligentes basadas en tus umbrales y métricas recientes.</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <button class="relative" aria-label="Notificaciones">
+                <span class="material-symbols-outlined text-gray-700 text-2xl">notifications</span>
+                <span class="absolute -top-0.5 -right-0.5 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+              </button>
+              <button aria-label="Perfil">
+                <span class="material-symbols-outlined text-gray-700 text-3xl">account_circle</span>
+              </button>
+            </div>
           </header>
 
           <!-- Controles -->
           <section class="mb-6 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
             <div class="flex items-center gap-2">
               <input id="q" type="text" placeholder="Buscar colmena…" class="form-input rounded-md border-gray-300">
-              <button id="btnSim" class="px-3 py-2 rounded-md bg-[var(--primary)] font-semibold hover:brightness-110">Simular datos</button>
+              <button id="btnSim" class="px-3 py-2 rounded-md bg-[var(--primary-color)] font-semibold hover:brightness-110">Simular datos</button>
             </div>
             <div class="flex items-center gap-3">
               <span class="pill bg-green-100 text-green-800">Listo: <b id="countOk">0</b></span>
@@ -95,7 +128,7 @@
       <p id="mTitle" class="text-sm text-gray-600 mb-4"></p>
       <ul id="mReasons" class="list-disc pl-5 text-sm text-gray-800 space-y-1"></ul>
       <div class="mt-5 text-right">
-        <button id="mOk" class="px-4 py-2 rounded-md bg-[var(--primary)] font-semibold hover:brightness-110">Entendido</button>
+        <button id="mOk" class="px-4 py-2 rounded-md bg-[var(--primary-color)] font-semibold hover:brightness-110">Entendido</button>
       </div>
     </div>
   </div>
@@ -113,7 +146,6 @@
       { id: 'Colmena 8', t: 28, h: 55, w: 18.7, trendW: +0.3, days: 6  },
     ];
 
-    // ------- Umbrales desde localStorage (thresholds.html) -------
     function getThresholds(){
       const raw = localStorage.getItem('api-connect-thresholds');
       const def = { temp:{min:10,max:35}, hum:{min:40,max:70}, w:{min:5,max:20} };
@@ -121,19 +153,13 @@
       try { return Object.assign(def, JSON.parse(raw)); } catch { return def; }
     }
 
-    // ------- Regla de decisión (simple y transparente) -------
-    // "Listo para cosechar" si:
-    // 1) t y h dentro del rango,
-    // 2) peso >= 75% del peso máximo configurado,
-    // 3) tendencia de peso no es claramente negativa,
-    // 4) han pasado >= 14 días desde última cosecha.
     function decide(hive, thr){
       const reasons = [];
       const okTemp = hive.t >= thr.temp.min && hive.t <= thr.temp.max;
       const okHum  = hive.h >= thr.hum.min  && hive.h <= thr.hum.max;
       const target = thr.w.max * 0.75;
       const okW    = hive.w >= target;
-      const okTrend= hive.trendW >= -0.05; // caídas fuertes detienen la cosecha
+      const okTrend= hive.trendW >= -0.05;
       const okDays = hive.days >= 14;
 
       if(!okTemp) reasons.push(`Temperatura fuera de rango (${hive.t}°C, permitido ${thr.temp.min}–${thr.temp.max})`);
@@ -146,7 +172,6 @@
       return { ok, reasons, target };
     }
 
-    // ------- Render -------
     const $ = s => document.querySelector(s);
     const listOk   = $('#listOk');
     const listWait = $('#listWait');
@@ -197,11 +222,9 @@
 
     q.addEventListener('input', render);
 
-    // ------- Simulación (para demo) -------
-    // Ajusta un poco t, h, w y días para "mover" recomendaciones.
     $('#btnSim').addEventListener('click', ()=>{
       const base = JSON.parse(JSON.stringify(seedHives));
-      const jitter = () => (Math.random()*2-1); // -1..+1
+      const jitter = () => (Math.random()*2-1);
       base.forEach(h=>{
         h.t = Number((h.t + jitter()).toFixed(1));
         h.h = Math.min(100, Math.max(0, Number((h.h + jitter()*2).toFixed(0))));
@@ -213,7 +236,7 @@
       render();
     });
 
-    // ------- Modal Detalle -------
+    // Modal
     const modal = $('#modal'), mClose = $('#mClose'), mOk = $('#mOk'), mTitle = $('#mTitle'), mReasons = $('#mReasons');
     function openModal(h){
       const thr = getThresholds();
@@ -237,7 +260,6 @@
     mOk.addEventListener('click', closeModal);
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
 
-    // Delegación para botones "Detalles"
     document.addEventListener('click', (e)=>{
       const btn = e.target.closest('.detail-btn');
       if(!btn) return;

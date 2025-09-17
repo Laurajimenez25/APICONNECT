@@ -3,182 +3,137 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Api Connect — Información del Lote</title>
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
-  <title>Api Connect - Info Miel y Feedback</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-  <style type="text/tailwindcss">
-    :root {
-      --primary-color: #f2b90d;
-      --secondary-color: #fcfbf8;
-      --text-primary: #1c180d;
-      --text-secondary: #9c8749;
-      --border-color: #f4f0e7;
+  <style>
+    :root{
+      --primary:#f2b90d;
+      --bg:#fcfbf8;
+      --surface:#ffffff;
+      --ink:#1c180d;
+      --muted:#6b6b5e;
+      --border:#e8e2ce;
     }
-    body { font-family: "Work Sans","Noto Sans",sans-serif; }
+    body{ background:var(--bg); color:var(--ink); font-family:"Work Sans","Noto Sans",sans-serif; }
     .star-rating input[type="radio"] { display: none; }
-    .star-rating label { cursor: pointer; color: #e8e2ce; line-height: 1; }
+    .star-rating label { cursor: pointer; color: #e8e2ce; font-size: 2rem; }
     .star-rating input[type="radio"]:checked ~ label,
     .star-rating label:hover,
-    .star-rating label:hover ~ label { color: var(--primary-color); }
+    .star-rating label:hover ~ label { color: var(--primary); }
   </style>
 </head>
-<body class="bg-[var(--secondary-color)]">
-  <div class="relative flex min-h-screen flex-col">
-    <header class="flex items-center justify-between border-b border-[var(--border-color)] px-4 sm:px-10 py-4">
-      <div class="flex items-center gap-3">
-        <div class="size-8 text-[var(--primary-color)]" aria-hidden="true">
-          <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 4C14.0589 4 6 12.0589 6 22C6 28.6931 9.94318 34.5153 15.5 37.6008V44H32.5V37.6008C38.0568 34.5153 42 28.6931 42 22C42 12.0589 33.9411 4 24 4Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M24 28C27.3137 28 30 25.3137 30 22C30 18.6863 27.3137 16 24 16C20.6863 16 18 18.6863 18 22C18 25.3137 20.6863 28 24 28Z" fill="currentColor"></path>
-          </svg>
-        </div>
-        <h1 class="text-[var(--text-primary)] text-xl font-bold tracking-tight">Api Connect</h1>
-      </div>
-      <p class="text-[var(--text-secondary)] font-semibold">
-        Lote:
-        <span id="loteSpan" class="font-bold text-[var(--text-primary)]">#GN2023-07A</span>
-      </p>
+<body>
+  <div class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="flex items-center justify-between border-b border-[var(--border)] px-6 py-4 bg-white">
+      <div class="flex items-center gap-3 mb-6">
+  <img class="w-12 h-12 rounded-full object-cover shadow-md" alt="Logo Api Connect" 
+       src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"/>
+  <h1 class="text-xl font-bold">Api Connect</h1>
+</div>
+      <p class="text-[var(--muted)] font-semibold">Lote: <span id="loteSpan" class="text-[var(--ink)] font-bold">—</span></p>
     </header>
 
-    <main class="flex flex-1 justify-center py-8 px-4 sm:px-8">
-      <div class="flex flex-col w-full max-w-4xl">
-        <!-- Identificación del lote -->
-        <section class="mb-12">
-          <h2 class="text-[var(--text-primary)] text-3xl font-bold tracking-tight mb-6">Identificación del Lote</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div class="w-full h-80 rounded-lg shadow-lg overflow-hidden">
-              <img alt="Frasco de miel del lote" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ859NBhKAZB0LANt26_yXv1lzusNFDbWKoU6fCRwCOUR5ZAPkOMku0T0PTzNCVVRJMrnDlbUUlvp04QLmzCTCxIiX5INrLQxvRtiJusuU_jxfwssBelkEcdiLozQYRSXeLcLwYMVqeXH6GjCA_nrvqbACwNoRoL6oA3PzxCF4DVYPFodpdx7AcwS1BBpiumAlpdGIo1A1tRrpLeUbh3STjnvw1HIGI_cNTztgeOPoKRd_OHrB5B4wr9PwHJKEjkIrkjmSAin_kpQ"/>
+    <!-- Main -->
+    <main class="flex-1 p-8 max-w-4xl mx-auto w-full">
+      <!-- Info lote -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6">Detalles del Lote</h2>
+        <div class="bg-white border border-[var(--border)] rounded-lg shadow-sm p-6 space-y-4" id="loteInfo">
+          <p class="text-[var(--muted)]">Cargando datos del lote...</p>
+        </div>
+      </section>
+
+      <!-- Feedback -->
+      <section>
+        <h2 class="text-3xl font-bold mb-6">Tu Opinión</h2>
+        <div class="bg-white p-6 rounded-lg shadow-md border border-[var(--border)]">
+          <form id="feedbackForm" class="space-y-6">
+            <div>
+              <label class="block mb-2 font-medium">Califica este producto</label>
+              <div class="star-rating flex flex-row-reverse justify-end gap-1" role="radiogroup">
+                <input id="star5" name="rating" type="radio" value="5"><label for="star5">★</label>
+                <input id="star4" name="rating" type="radio" value="4"><label for="star4">★</label>
+                <input id="star3" name="rating" type="radio" value="3"><label for="star3">★</label>
+                <input id="star2" name="rating" type="radio" value="2"><label for="star2">★</label>
+                <input id="star1" name="rating" type="radio" value="1"><label for="star1">★</label>
+              </div>
+              <p id="ratingError" class="hidden text-sm text-red-600 mt-2">Selecciona una calificación.</p>
             </div>
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-[var(--primary-color)]" aria-hidden="true">qr_code_2</span>
-                <div>
-                  <p class="text-[var(--text-secondary)] text-sm">Número de Lote</p>
-                  <p id="loteNumero" class="text-[var(--text-primary)] text-base font-medium">GN2023-07A</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-[var(--primary-color)]" aria-hidden="true">hive</span>
-                <div>
-                  <p class="text-[var(--text-secondary)] text-sm">Colmena de Procedencia</p>
-                  <p class="text-[var(--text-primary)] text-base font-medium">Colmena #42</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-[var(--primary-color)]" aria-hidden="true">calendar_month</span>
-                <div>
-                  <p class="text-[var(--text-secondary)] text-sm">Fecha de Cosecha</p>
-                  <p class="text-[var(--text-primary)] text-base font-medium">15 de julio, 2023</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-[var(--primary-color)]" aria-hidden="true">weight</span>
-                <div>
-                  <p class="text-[var(--text-secondary)] text-sm">Peso Promedio</p>
-                  <p class="text-[var(--text-primary)] text-base font-medium">500 g</p>
-                </div>
-              </div>
-              <p class="text-[var(--text-primary)] text-sm italic pt-4">
-                Este lote de miel es monitoreado para asegurar la salud de las colmenas y la pureza del producto.
-              </p>
+            <div>
+              <label for="comment" class="block mb-2 font-medium">Comentario</label>
+              <textarea id="comment" class="form-textarea w-full rounded-md border border-[var(--border)]" rows="4" placeholder="Escribe tu opinión..."></textarea>
             </div>
+            <button type="submit" class="px-6 py-2 rounded-md bg-[var(--primary)] font-semibold hover:opacity-90">Enviar</button>
+          </form>
+          <div id="confirmation-message" class="hidden mt-6 text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+            ¡Gracias! Tu opinión ha sido enviada.
           </div>
-        </section>
-
-        <!-- Opinión -->
-        <section class="mb-12">
-          <h2 class="text-[var(--text-primary)] text-3xl font-bold tracking-tight mb-6">Tu Opinión Nos Importa</h2>
-          <div class="bg-white p-6 rounded-lg shadow-md border border-[var(--border-color)]">
-            <form id="feedbackForm" class="flex flex-col gap-6" novalidate>
-              <div>
-                <label for="rating" class="block text-lg font-medium text-[var(--text-primary)] mb-2">Califica este producto</label>
-                <div class="star-rating flex flex-row-reverse justify-end items-center gap-1 text-4xl" role="radiogroup" aria-label="Calificación">
-                  <input id="star5" name="rating" type="radio" value="5"><label for="star5" title="5 estrellas">★</label>
-                  <input id="star4" name="rating" type="radio" value="4"><label for="star4" title="4 estrellas">★</label>
-                  <input id="star3" name="rating" type="radio" value="3"><label for="star3" title="3 estrellas">★</label>
-                  <input id="star2" name="rating" type="radio" value="2"><label for="star2" title="2 estrellas">★</label>
-                  <input id="star1" name="rating" type="radio" value="1"><label for="star1" title="1 estrella">★</label>
-                </div>
-                <p id="ratingError" class="hidden mt-2 text-sm text-red-600">Por favor selecciona una calificación.</p>
-              </div>
-
-              <div>
-                <label for="comment" class="block text-lg font-medium text-[var(--text-primary)] mb-2">Déjanos tu comentario</label>
-                <textarea id="comment" class="form-input w-full min-w-0 resize-y rounded-md text-[var(--text-primary)] border border-[#e8e2ce] bg-[var(--secondary-color)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] min-h-36 p-4 placeholder:text-[var(--text-secondary)]" placeholder="Escribe tu comentario aquí..."></textarea>
-              </div>
-
-              <button type="submit" class="flex w-full sm:w-auto self-end h-12 px-6 items-center justify-center rounded-md bg-[var(--primary-color)] text-[var(--text-primary)] text-base font-bold tracking-wide hover:bg-yellow-500 transition-colors">
-                Enviar opinión
-              </button>
-            </form>
-
-            <div id="confirmation-message" class="hidden mt-6 text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg" role="alert" aria-live="polite">
-              <strong class="font-bold">¡Gracias!</strong>
-              <span class="block sm:inline"> Tu opinión ha sido enviada con éxito.</span>
-            </div>
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
 
-    <footer class="bg-white border-t border-[var(--border-color)] mt-auto">
-      <div class="max-w-4xl mx-auto py-6 px-4 sm:px-8 text-center">
-        <p class="text-xs text-gray-400">© 2023 Api Connect. Todos los derechos reservados.</p>
-      </div>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[var(--border)] py-4 text-center text-sm text-[var(--muted)]">
+      © 2023 Api Connect. Todos los derechos reservados.
     </footer>
   </div>
 
   <script>
-    // 1) Lote desde la URL (?lote=GN2023-07A)
-    (function syncLoteFromUrl(){
+    // Obtener datos del lote desde URL (?id=...)
+    (function(){
       const params = new URLSearchParams(location.search);
-      const lote = params.get('lote');
-      if(lote){
-        document.getElementById('loteSpan').textContent = '#' + lote;
-        document.getElementById('loteNumero').textContent = lote;
+      const id = params.get('id');
+      const cont = document.getElementById('loteInfo');
+      const span = document.getElementById('loteSpan');
+      if(!id){
+        cont.innerHTML = '<p class="text-red-600">No se encontró información del lote.</p>';
+        return;
       }
+      span.textContent = id;
+      try {
+        const lotes = JSON.parse(localStorage.getItem('api-connect-lotes')||'[]');
+        const lote = lotes.find(l=>String(l.id)===id);
+        if(lote){
+          cont.innerHTML = `
+            <img src="https://images.unsplash.com/photo-1587049352846-4a2224e7a772?q=80&w=800&auto=format&fit=crop" alt="Imagen de apicultura" class="w-full h-64 object-cover rounded-lg mb-4"/>
+            <p><b>Origen:</b> ${lote.origen}</p>
+            <p><b>Fecha de Cosecha:</b> ${lote.fecha}</p>
+            <p><b>Peso:</b> ${lote.peso} kg</p>
+            <p><b>Notas:</b> ${lote.notas||'-'}</p>
+          `;
+        } else {
+          cont.innerHTML = '<p>No se hallaron datos guardados para este lote.</p>';
+        }
+      } catch(e){ cont.innerHTML = '<p>Error al cargar datos del lote.</p>'; }
     })();
 
-    // 2) Manejo de envío (mostrar confirmación + guardar en localStorage)
+    // Feedback
     const form = document.getElementById('feedbackForm');
     const msg = document.getElementById('confirmation-message');
     const ratingError = document.getElementById('ratingError');
-
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', e=>{
       e.preventDefault();
-
-      const rating = (new FormData(form)).get('rating');
+      const fd = new FormData(form);
+      const rating = fd.get('rating');
       const comment = document.getElementById('comment').value.trim();
-
-      // Validación simple de rating
-      if(!rating){
-        ratingError.classList.remove('hidden');
-        return;
-      } else {
-        ratingError.classList.add('hidden');
-      }
-
-      // Persistencia local (simulada)
-      try {
-        const lote = document.getElementById('loteNumero').textContent.trim();
-        const existing = JSON.parse(localStorage.getItem('apiConnectFeedback') || '[]');
-        existing.push({ lote, rating: Number(rating), comment, at: new Date().toISOString() });
+      if(!rating){ ratingError.classList.remove('hidden'); return; }
+      ratingError.classList.add('hidden');
+      try{
+        const lote = document.getElementById('loteSpan').textContent;
+        const existing = JSON.parse(localStorage.getItem('apiConnectFeedback')||'[]');
+        existing.push({lote, rating:Number(rating), comment, at:new Date().toISOString()});
         localStorage.setItem('apiConnectFeedback', JSON.stringify(existing));
-      } catch(_) {}
-
-      // UI: feedback de éxito
+      }catch{}
       msg.classList.remove('hidden');
       form.reset();
-
-      // Ocultar mensaje después de 4s
       setTimeout(()=> msg.classList.add('hidden'), 4000);
     });
-
-    // Accesibilidad: ocultar error al seleccionar una estrella
     document.querySelectorAll('input[name="rating"]').forEach(r=>{
       r.addEventListener('change', ()=> ratingError.classList.add('hidden'));
     });

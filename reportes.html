@@ -3,11 +3,14 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Api Connect — Historial de Datos</title>
+  <title>Api Connect — Reportes</title>
 
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin/>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
   <!-- Variables + utilidades compatibles con Tailwind -->
@@ -24,7 +27,6 @@
     body{ font-family:"Work Sans","Noto Sans",sans-serif; }
     .material-symbols-outlined{ font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
 
-    /* Clases utilitarias que usas en el HTML */
     .bg-background-color{ background-color:var(--background-color); }
     .text-text-color{ color:var(--text-color); }
     .text-subtle-text-color{ color:var(--subtle-text-color); }
@@ -36,12 +38,60 @@
 </head>
 
 <body class="bg-background-color text-text-color">
-  <div class="relative flex min-h-screen flex-col overflow-x-hidden">
-    <div class="flex h-full grow flex-col">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar (pegado) -->
+    <aside class="hidden lg:flex w-64 bg-white border-r border-border-color p-6 flex-col">
+      <div class="flex items-center gap-3 mb-6">
+        <img
+          src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"
+          alt="Logo Api Connect"
+          class="w-12 h-12 rounded-full object-cover shadow-md"
+        />
+        <h1 class="text-xl font-bold">Api Connect</h1>
+      </div>
 
-      <!-- Header -->
-      <header class="flex items-center justify-between border-b border-solid border-border-color px-10 py-3">
+      <!-- Menú -->
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">monitoring</span>
+          <span>Estado</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[color:var(--primary-color)] text-gray-900 font-semibold" href="#">
+          <span class="material-symbols-outlined">assessment</span>
+          <span>Reportes</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Registro de lote</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">tune</span>
+          <span>Umbrales</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">thermostat</span>
+          <span>Calefacción</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">recommend</span>
+          <span>Recomendaciones</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Comentarios</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Wrapper contenido -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Header superior -->
+      <header class="flex items-center justify-between border-b border-solid border-border-color px-6 lg:px-10 py-3 bg-secondary-color">
         <div class="flex items-center gap-4">
+          <!-- Botón para abrir menú en móvil -->
+          <button class="lg:hidden flex h-10 w-10 items-center justify-center rounded-md bg-accent-color" id="btnOpenSidebar" aria-label="Abrir menú">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
           <div class="text-[var(--primary-color)]">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
               <path d="M16.5 6.7554C16.5 7.64094 15.0866 8.3976 13.0659 8.847C11.8315 9.13527 10.3703 9.30232 9 9.30232C7.62967 9.30232 6.16853 9.13527 4.93412 8.847C2.91338 8.3976 1.5 7.64094 1.5 6.7554V17.2446C1.5 18.1251 2.91338 18.8842 4.93412 19.3335C6.16853 19.6218 7.62967 19.7888 9 19.7888C10.3703 19.7888 11.8315 19.6218 13.0659 19.3335C15.0866 18.8842 16.5 18.1251 16.5 17.2446V6.7554Z" stroke="currentColor" stroke-width="1.5"/>
@@ -50,31 +100,27 @@
               <path d="M22.5 17.25C22.5 18.433 18.4706 19.5 13.5 19.5C12.5513 19.5 11.6369 19.4444 10.7687 19.3421" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/>
             </svg>
           </div>
-          <h1 class="text-lg font-bold leading-tight tracking-[-0.015em]">Api Connect</h1>
         </div>
 
-        <nav class="flex flex-1 justify-center gap-8">
-          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="index.html">Inicio</a>
-          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="#">Colmenas</a>
-          <a class="text-text-color text-sm font-bold" href="history.html">Historial de Datos</a>
-          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="#">Mercado</a>
-          <a class="text-subtle-text-color hover:text-text-color text-sm font-medium transition-colors" href="#">Comunidad</a>
-        </nav>
 
-        <div class="flex items-center justify-end gap-4">
-          <button class="flex h-10 w-10 items-center justify-center rounded-full bg-accent-color hover:bg-[color-mix(in_oklab,var(--accent-color),black 6%)] transition-colors">
+        <div class="flex items-center justify-end gap-2 sm:gap-4">
+          <!-- Notificaciones -->
+          <button class="relative flex h-10 w-10 items-center justify-center rounded-full bg-accent-color hover:bg-[color-mix(in_oklab,var(--accent-color),black_6%)] transition-colors" aria-label="Notificaciones">
             <span class="material-symbols-outlined text-2xl">notifications</span>
+            <span class="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
           </button>
-          <div class="size-10 rounded-full bg-cover bg-center"
-               style='background-image:url("https://lh3.googleusercontent.com/aida-public/AB6AXuDuCiFBVz139HxD6O-lhlftIHyzEyqrnO5oUn-mFCzJUbePcqG86VnLAiU2PKl-6f19ZLnfk-U8rKc89AQVw9GYXf3whiqJ0xAAo3KwB_XK2LA-_sntETLn5VcBi5HOT_3i9__KzjMZWBho3QEGqNbji-72CeE5PDCwxjg9d-O4gRIGdrUpMD3EV4bLut_isi5gZptpsXK7DEd_y3h5R8soIfXk9Mzf-LVC1Yk2ttxaqtvVnye230IF-WyaLx5jVU0CYrvslAsZGds");'></div>
+          <!-- Perfil (sin foto) -->
+          <button class="flex h-10 w-10 items-center justify-center rounded-full bg-accent-color hover:bg-[color-mix(in_oklab,var(--accent-color),black_6%)] transition-colors" aria-label="Perfil">
+            <span class="material-symbols-outlined text-3xl">account_circle</span>
+          </button>
         </div>
       </header>
 
-      <!-- Main -->
-      <main class="flex flex-1 justify-center py-8 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-7xl">
+      <!-- Contenido principal -->
+      <main class="flex-1 overflow-y-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-7xl mx-auto">
           <div class="mb-8">
-            <h2 class="text-4xl font-bold tracking-tighter">Historial de Datos</h2>
+            <h2 class="text-4xl font-bold tracking-tighter">Reportes</h2>
             <p class="text-subtle-text-color mt-2">Explora el historial de datos de tus colmenas. Filtra por rango de fechas y exporta los datos para un análisis más profundo.</p>
           </div>
 
@@ -104,8 +150,8 @@
               </div>
 
               <div class="flex items-end gap-4">
-                <button id="btnFilter" class="flex h-12 flex-1 items-center justify-center rounded-md bg-accent-color px-6 text-sm font-bold transition-colors hover:bg-[color-mix(in_oklab,var(--accent-color),black 6%)]">Filtrar</button>
-                <button id="btnExport" class="flex h-12 flex-1 items-center justify-center gap-2 rounded-md bg-[var(--primary-color)] px-6 text-sm font-bold transition-opacity hover:opacity-90">
+                <button id="btnFilter" class="flex h-12 flex-1 items-center justify-center rounded-md bg-accent-color px-6 text-sm font-bold transition-colors hover:bg-[color-mix(in_oklab,var(--accent-color),black_6%)]">Filtrar</button>
+                <button id="btnExport" class="flex h-12 flex-1 items-center justify-center gap-2 rounded-md bg-[color:var(--primary-color)] px-6 text-sm font-bold transition-opacity hover:opacity-90">
                   <span class="material-symbols-outlined">download</span>Exportar
                 </button>
               </div>
@@ -209,13 +255,33 @@
                 </div>
               </div>
             </div> <!-- /space-y-6 -->
-          </div> <!-- /space-y-6 -->
-        </div> <!-- /container -->
+          </div> <!-- /container -->
+        </div>
       </main>
     </div>
   </div>
 
-  <!-- JS: filtro simple + exportar CSV -->
+  <!-- Drawer móvil para el sidebar (opcional simple) -->
+  <div id="mobileDrawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/30" id="backdrop"></div>
+    <aside class="absolute left-0 top-0 h-full w-72 bg-white border-r border-border-color p-6 flex flex-col">
+      <div class="flex items-center gap-3 mb-6">
+        <img src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg" alt="Logo Api Connect" class="w-12 h-12 rounded-full object-cover shadow-md"/>
+        <h1 class="text-xl font-bold">Api Connect</h1>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">monitoring</span><span>Estado</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">assessment</span><span>Reportes</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">inventory_2</span><span>Registro de lote</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">tune</span><span>Umbrales</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[color:var(--primary-color)] text-gray-900 font-semibold" href="#"><span class="material-symbols-outlined">thermostat</span><span>Calefacción</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">recommend</span><span>Recomendaciones</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">chat</span><span>Comentarios</span></a>
+      </nav>
+    </aside>
+  </div>
+
+  <!-- JS: filtro simple + exportar CSV + drawer móvil -->
   <script>
     const $ = (s, c=document) => c.querySelector(s);
     const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
@@ -225,7 +291,6 @@
     const to = $("#to");
     const btnFilter = $("#btnFilter");
     const btnExport = $("#btnExport");
-    const table = $("#tbl");
     const rows = $$("#tbl tbody tr");
 
     function parseDate(iso){ const d = new Date(iso); return isNaN(d) ? null : d; }
@@ -270,9 +335,17 @@
       URL.revokeObjectURL(url);
     }
 
-    btnFilter.addEventListener("click", (e)=>{ e.preventDefault(); applyFilters(); });
-    [q, from, to].forEach(el => el.addEventListener("input", applyFilters));
-    btnExport.addEventListener("click", (e)=>{ e.preventDefault(); exportCSV(); });
+    btnFilter?.addEventListener("click", (e)=>{ e.preventDefault(); applyFilters(); });
+    [q, from, to].forEach(el => el?.addEventListener("input", applyFilters));
+    btnExport?.addEventListener("click", (e)=>{ e.preventDefault(); exportCSV(); });
+
+    // Drawer móvil
+    const drawer = $("#mobileDrawer");
+    const backdrop = $("#backdrop");
+    const btnOpen = $("#btnOpenSidebar");
+
+    btnOpen?.addEventListener('click', ()=>{ drawer.classList.remove('hidden'); });
+    backdrop?.addEventListener('click', ()=>{ drawer.classList.add('hidden'); });
   </script>
 </body>
 </html>

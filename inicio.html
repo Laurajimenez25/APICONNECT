@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Inicio</title>
+
+  <!-- Fuentes y Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <style>
+    :root{
+      --primary:#f2b90d;   /* ámbar Api Connect */
+      --bg:#fcfbf8;        /* fondo */
+      --surface:#ffffff;   /* tarjetas */
+      --ink:#1c180d;       /* texto principal */
+      --muted:#9c8749;     /* texto sutil */
+      --border:#e8e2ce;    /* borde suave */
+      --radius:12px;
+    }
+    body{ background:var(--bg); color:var(--ink); font-family: "Work Sans","Noto Sans",sans-serif; }
+    .btn{ border-radius:10px; font-weight:700; }
+    .btn-primary{ background:var(--primary); color:var(--ink); }
+    .btn-ghost{ background:#f4f0e7; color:var(--ink); }
+    .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between border-b border-[var(--border)] px-6 lg:px-10 py-3 bg-[var(--surface)]">
+      <div class="flex items-center gap-3">
+        <svg class="size-6 text-[var(--ink)]" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+          <path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z"/>
+          <path fill-rule="evenodd" d="M10.45 13.85c.03.08.17.4.93.89.92.6 2.37 1.18 4.29 1.64 2.33.56 5.2.9 8.33.9s6-.34 8.33-.9c1.92-.46 3.38-1.04 4.3-1.64.76-.49.9-.81.93-.85-.02-.07-.12-.26-.49-.56-.54-.44-1.44-.92-2.72-1.37C31.79 11.03 28.13 10.44 24 10.44s-7.79.59-10.34 1.48c-1.28.45-2.18.93-2.72 1.37-.37.3-.47.49-.49.56z"/>
+        </svg>
+        <h1 class="text-lg font-bold">Api Connect</h1>
+      </div>
+
+      <div class="flex gap-2">
+        <button class="btn btn-primary h-10 px-4">Registrarse</button>
+        <button class="btn btn-ghost h-10 px-4">Iniciar sesión</button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section
+      class="px-4 lg:px-10 py-8 md:py-14"
+      style='background:
+        linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.40)),
+        url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmQ83SG_FYkVHSoFAydMsmuEVNvKqqlfRWmM9mYwFBlLQ1rd7BDFALBCvOZsAKBB2chJt1DA7-4159lVszslMQEZobEho65c6CWhbhvXfXLHRuGGo5J1QCmRd6rXGDi7Q5m-qaJ5wj4gswi-H6ASUehb7znlIsXPa2hbliZ-WqebCKI59WpZmH9MdnpFHTc-vwUViDAzLWXwr4ufL0Yar9dY7UjbHZEXE1jzlZyHSn8t0mgLEuFgkQFgGr346aJ5qETPMRlQzHnAE")
+        center/cover no-repeat;'
+    >
+      <div class="max-w-5xl mx-auto text-center text-white">
+        <h2 class="text-4xl md:text-5xl font-black leading-tight">Api Connect: Conectando la apicultura con el mundo</h2>
+        <p class="mt-3 text-base md:text-lg">
+          Plataforma integral para apicultores, cooperativas y consumidores que impulsa transparencia,
+          sostenibilidad y productos de alta calidad.
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+          <button class="btn btn-primary h-12 px-6">Registrarse</button>
+          <button class="btn btn-ghost h-12 px-6">Iniciar sesión</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

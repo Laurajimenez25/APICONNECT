@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Comentarios</title>
+
+  <!-- Fuentes e iconos -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <style>
+    :root{
+      --primary-color:#f2b90d;     
+      --bg:#fcfbf8;           /* fondo claro */
+      --surface:#ffffff;      /* tarjetas */
+      --ink:#1c180d;          /* texto principal */
+      --muted:#6b6b5e;        /* texto secundario */
+      --border:#e8e2ce;       /* bordes suaves */
+      --accent:#f4f0e7;       /* fondo inputs */
+    }
+    body{ background:var(--bg); color:var(--ink); font-family:"Work Sans","Noto Sans",sans-serif; }
+    .material-symbols-outlined{ font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="hidden lg:flex w-72 shrink-0 bg-[var(--surface)] border-r border-[var(--border)] p-6 flex-col">
+      <div class="flex items-center gap-3 mb-6">
+        <img class="w-12 h-12 rounded-full object-cover shadow-md" alt="Logo Api Connect" 
+             src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"/>
+        <h1 class="text-xl font-bold">Api Connect</h1>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">monitoring</span><span>Estado</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">assessment</span><span>Reportes</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">inventory_2</span><span>Registro de lote</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">tune</span><span>Umbrales</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">thermostat</span><span>Calefacción</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">recommend</span><span>Recomendaciones</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[var(--primary-color)] text-gray-900 font-semibold" href="#"><span class="material-symbols-outlined" style="color:var(--primary)">chat</span><span>Comentarios</span></a>
+      </nav>
+    </aside>
+
+    <!-- Contenido -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Header -->
+      <header class="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)] px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex items-center gap-3">
+          <!-- botón menú móvil -->
+          <button id="openDrawer" class="lg:hidden flex h-10 w-10 items-center justify-center rounded-md bg-[var(--accent)]" aria-label="Abrir menú">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h2 class="text-2xl sm:text-3xl font-bold">Comentarios</h2>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-4">
+          <button class="relative flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]" aria-label="Notificaciones">
+            <span class="material-symbols-outlined text-2xl">notifications</span>
+            <span class="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+          </button>
+          <button class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]" aria-label="Perfil">
+            <span class="material-symbols-outlined text-3xl">account_circle</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main -->
+      <main class="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Intro breve -->
+        <p class="text-sm text-[var(--muted)] mb-6">Resumen de opiniones recientes de consumidores sobre productos de los apicultores.</p>
+
+        <!-- Lista de comentarios (sólo algunos) -->
+        <section class="bg-[var(--surface)] rounded-lg border border-[var(--border)] shadow-sm overflow-hidden">
+          <div class="p-6 space-y-6">
+            <!-- Comentario 1 -->
+            <article class="pb-6 border-b border-[var(--border)]">
+              <div class="flex items-center gap-3">
+                <img class="rounded-full size-10 object-cover" alt="Elena Sánchez" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByUYLj93xy0OD0NfjraitixP_VZjnRnog5z79SZ0l9gtVaXAEX0Lg1OHQna0u1iq4COYqf3HuLxxWvr1DTEue3g6xne6MsQv98WLWejYfT447h2spEVpHaIDdQbdxj93CwCUvItTY7uj4qcHLobI9QHpHDjJ9KOOOz89ZdmF80do00rgPvK0KaBbAPQbL57ojLUvmzYxlcdVfc2AX4RtTBEx6tesymuIcVu0WVYHaosRgHNWiBZQ1lyyhB9WVpNtSbuKm5zeACPHI"/>
+                <div>
+                  <p class="font-semibold">Elena Sánchez</p>
+                  <p class="text-xs text-[var(--muted)]">15 de mayo de 2024</p>
+                </div>
+              </div>
+              <div class="mt-3 flex gap-1 text-lg" aria-label="5 de 5">
+                <span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span>
+              </div>
+              <p class="mt-2 text-[var(--muted)]">La miel de Ricardo es excepcional, con un sabor único y una textura perfecta. Definitivamente la mejor que he probado.</p>
+            </article>
+
+            <!-- Comentario 2 -->
+            <article class="pb-6 border-b border-[var(--border)]">
+              <div class="flex items-center gap-3">
+                <img class="rounded-full size-10 object-cover" alt="Manuel Fernández" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEUOu1MWIlTJH68geHWdAaPTPMFUlDPovKwvNtY629woFU7SWnzlCyADI8wewuvObEqTkRtcAzJ1z4wTBpdjPlbyN54mab6XUbOC0gmxSnGVOuAShlo6_UoLc7rOCbHZutpn-pb0W3e6PzMkQN2nScCEvxrHQNgRzVLbUIxDRDXj9MRxyZxuzIyfkGIPApMI2zVIJSuzRSiri1IglOvDwaWvU9P1u_KolqM7DL1KQVIb0yZFFtRI5CkffLKlorD7BxiCOWD08nt1Q"/>
+                <div>
+                  <p class="font-semibold">Manuel Fernández</p>
+                  <p class="text-xs text-[var(--muted)]">10 de mayo de 2024</p>
+                </div>
+              </div>
+              <div class="mt-3 flex gap-1 text-lg" aria-label="4 de 5">
+                <span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span class="text-gray-300">★</span>
+              </div>
+              <p class="mt-2 text-[var(--muted)]">La miel de Sofía es muy buena, aunque un poco más cara que otras opciones en el mercado. La calidad justifica el precio.</p>
+            </article>
+
+            <!-- Comentario 3 -->
+            <article>
+              <div class="flex items-center gap-3">
+                <img class="rounded-full size-10 object-cover" alt="Laura Gutiérrez" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_32x9CKhzWw0ENY3RkR2-fOaj2JA-VcHqUfrjjh4Ninas5tsfa3VHxzpPTp9PmGmyp4DuT9bzqVU5C6kYvSKneu3jsr4oWagk8Kyc5MQ2YQhocJvL6qFwoqJqbYoNxGNnnSk4D8uATxlHflc_WCYtPckjolDk6TAEPGbXpLuZUwZ8NnByQYM6llZaNpLveKKFVzYeiDUK4FYPSWM_Sv8hhXXfjnuoDJQjX_bY3i7bLIpCto_oPufVa8rR7-6zwrYkElAUKUjw-9Q"/>
+                <div>
+                  <p class="font-semibold">Laura Gutiérrez</p>
+                  <p class="text-xs text-[var(--muted)]">5 de mayo de 2024</p>
+                </div>
+              </div>
+              <div class="mt-3 flex gap-1 text-lg" aria-label="3 de 5">
+                <span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span style="color:var(--primary)">★</span><span class="text-gray-300">★</span><span class="text-gray-300">★</span>
+              </div>
+              <p class="mt-2 text-[var(--muted)]">La miel de Carlos es decente, pero esperaba más por las buenas reseñas. El sabor es un poco común.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Drawer móvil -->
+  <div id="drawer" class="fixed inset-0 z-50 hidden">
+    <div id="backdrop" class="absolute inset-0 bg-black/30"></div>
+    <aside class="absolute left-0 top-0 h-full w-72 bg-white border-r border-[var(--border)] p-6 flex flex-col">
+      <div class="flex items-center gap-3 mb-6">
+        <img class="w-12 h-12 rounded-full object-cover shadow-md" alt="Logo Api Connect" 
+             src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"/>
+        <h1 class="text-xl font-bold">Api Connect</h1>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">monitoring</span><span>Estado</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">assessment</span><span>Reportes</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">inventory_2</span><span>Registro de lote</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">tune</span><span>Umbrales</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">thermostat</span><span>Calefacción</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#"><span class="material-symbols-outlined">recommend</span><span>Recomendaciones</span></a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[color-mix(in_oklab,var(--primary)_25%,white)] text-gray-900 font-semibold" href="#"><span class="material-symbols-outlined" style="color:var(--primary)">chat</span><span>Comentarios</span></a>
+      </nav>
+    </aside>
+  </div>
+
+  <script>
+    // Drawer móvil simple
+    const drawer = document.getElementById('drawer');
+    const openDrawer = document.getElementById('openDrawer');
+    const backdrop = document.getElementById('backdrop');
+    openDrawer?.addEventListener('click', ()=> drawer.classList.remove('hidden'));
+    backdrop?.addEventListener('click', ()=> drawer.classList.add('hidden'));
+  </script>
+</body>
+</html>

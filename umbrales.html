@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Api Connect — Umbrales</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Work+Sans:wght@400;500;700;900" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    :root { --primary-color:#f2b90d; --bg:#fcfbf8; --ink:#1c180d; --muted:#6b7280; --border:#e8e2ce; }
+    body{ font-family:"Work Sans","Noto Sans",sans-serif; background:var(--bg); color:var(--ink); }
+    .material-symbols-outlined{ font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  </style>
+</head>
+<body class="bg-[var(--bg)]">
+  <div class="relative flex min-h-screen">
+    <!-- Sidebar SIN header -->
+    <aside class="w-64 bg-white border-r border-[var(--border)] p-6 flex flex-col">
+      <!-- Marca + logo circular -->
+      <div class="flex items-center gap-3 mb-6">
+        <img
+          src="https://st5.depositphotos.com/77796366/64800/v/600/depositphotos_648004930-stock-illustration-simple-bee-logo-vector-inspiration.jpg"
+          alt="Logo Api Connect"
+          class="w-12 h-12 rounded-full object-cover shadow-md"
+        />
+        <h1 class="text-xl font-bold">Api Connect</h1>
+      </div>
+
+      <!-- Menú debajo de Api Connect -->
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">monitoring</span>
+          <span>Estado</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">assessment</span>
+          <span>Reportes</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span>Registro de lote</span>
+        </a>
+        <!-- ACTIVO: Umbrales -->
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md bg-[var(--primary-color)] text-gray-900 font-semibold" href="#">
+          <span class="material-symbols-outlined">tune</span>
+          <span>Umbrales</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">thermostat</span>
+          <span>Calefaccion</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">recommend</span>
+          <span>Recomendaciones</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700 font-medium" href="#">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Comentarios</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 px-10 py-8 lg:px-20 xl:px-40">
+      <!-- Barra superior con notificaciones y perfil (sin foto) -->
+      <div class="mb-8 flex justify-end items-center gap-3">
+        <button class="relative rounded-full p-2 hover:bg-gray-100" title="Notificaciones">
+          <span class="material-symbols-outlined text-gray-600">notifications</span>
+          <span class="absolute top-1 right-1 inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+        </button>
+        <button class="rounded-full p-2 hover:bg-gray-100" title="Perfil">
+          <span class="material-symbols-outlined text-gray-600 text-[28px]">account_circle</span>
+        </button>
+      </div>
+
+      <div class="mx-auto max-w-4xl">
+        <div class="mb-8">
+          <h2 class="text-4xl font-bold tracking-tight">Umbrales</h2>
+          <p class="mt-2 text-gray-600">Define los rangos críticos para monitorear la salud de tus colmenas.</p>
+        </div>
+
+        <div class="space-y-12">
+          <!-- Temperatura -->
+          <section class="rounded-lg border border-[var(--border)] bg-white shadow-sm">
+            <div class="p-6 flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-bold">Temperatura (°C)</h3>
+                <p class="mt-1 text-sm text-gray-600">Establece el rango de temperatura ideal.</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-400" aria-hidden="true">thermostat</span>
+            </div>
+            <div class="border-t border-[var(--border)] bg-[var(--bg)] p-6">
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <label class="block">
+                  <span class="block text-sm font-medium">Mínimo</span>
+                  <input id="temp-min" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="10" />
+                </label>
+                <label class="block">
+                  <span class="block text-sm font-medium">Máximo</span>
+                  <input id="temp-max" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="35" />
+                </label>
+              </div>
+              <div class="relative mt-6">
+                <div class="relative h-2 rounded-full bg-[var(--border)]">
+                  <div id="temp-bar" class="absolute h-2 rounded-full bg-[var(--primary-color)]" style="left:20%;right:30%;"></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-gray-500"><span>0°C</span><span>50°C</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Humedad -->
+          <section class="rounded-lg border border-[var(--border)] bg-white shadow-sm">
+            <div class="p-6 flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-bold">Humedad (%)</h3>
+                <p class="mt-1 text-sm text-gray-600">Configura los niveles de humedad.</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-400" aria-hidden="true">humidity_percentage</span>
+            </div>
+            <div class="border-t border-[var(--border)] bg-[var(--bg)] p-6">
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <label class="block">
+                  <span class="block text-sm font-medium">Mínimo</span>
+                  <input id="hum-min" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="40" />
+                </label>
+                <label class="block">
+                  <span class="block text-sm font-medium">Máximo</span>
+                  <input id="hum-max" type="number" class="form-input mt-1 w-full rounded-md border-[var(--border)]" value="70" />
+                </label>
+              </div>
+              <div class="relative mt-6">
+                <div class="relative h-2 rounded-full bg-[var(--border)]">
+                  <div id="hum-bar" class="absolute h-2 rounded-full bg-[var(--primary-color)]" style="left:40%;right:30%;"></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-gray-500"><span>0%</span><span>100%</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-12 flex justify-end gap-4">
+          <button id="btn-cancel" class="h-10 px-4 rounded-lg bg-gray-200 font-bold hover:bg-gray-300">Cancelar</button>
+          <button id="btn-save" class="h-10 px-4 rounded-lg bg-[var(--primary-color)] font-bold hover:brightness-110">Guardar Cambios</button>
+        </div>
+
+        <!-- Toast éxito -->
+        <div id="toast" class="mt-6 hidden rounded-md bg-green-50 p-4">
+          <div class="flex">
+            <span class="material-symbols-outlined text-green-500 mr-2">check_circle</span>
+            <p class="text-green-800 text-sm">¡Configuración guardada!</p>
+          </div>
+        </div>
+
+        <!-- Toast error -->
+        <div id="toast-err" class="mt-4 hidden rounded-md bg-red-50 p-4">
+          <div class="flex">
+            <span class="material-symbols-outlined text-red-500 mr-2">error</span>
+            <p id="err-msg" class="text-red-800 text-sm">Revisa los valores.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Rangos base (Peso removido)
+    const LIMITS = { temp:{min:0,max:50}, hum:{min:0,max:100} };
+
+    const $ = (id) => document.getElementById(id);
+    const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+    const pct = (v,a,b)=>((v-a)/(b-a))*100;
+
+    const inputs = {
+      tmin: $('temp-min'), tmax: $('temp-max'),
+      hmin: $('hum-min'),  hmax: $('hum-max')
+    };
+    const bars = { t: $('temp-bar'), h: $('hum-bar') };
+
+    function loadFromStorage(){
+      const raw = localStorage.getItem('api-connect-thresholds');
+      if(!raw) return;
+      try{
+        const cfg = JSON.parse(raw);
+        if(cfg.temp){ inputs.tmin.value = cfg.temp.min; inputs.tmax.value = cfg.temp.max; }
+        if(cfg.hum){  inputs.hmin.value = cfg.hum.min;  inputs.hmax.value = cfg.hum.max; }
+      }catch(_){}
+    }
+
+    function currentConfig(){
+      return {
+        temp:{min:Number(inputs.tmin.value),max:Number(inputs.tmax.value)},
+        hum:{min:Number(inputs.hmin.value),max:Number(inputs.hmax.value)}
+      };
+    }
+
+    function validate(cfg){
+      const errs=[];
+      if(cfg.temp.min>=cfg.temp.max) errs.push('Temperatura: el mínimo debe ser menor que el máximo.');
+      if(cfg.temp.min<LIMITS.temp.min||cfg.temp.max>LIMITS.temp.max) errs.push(`Temperatura: fuera de ${LIMITS.temp.min}–${LIMITS.temp.max} °C.`);
+      if(cfg.hum.min>=cfg.hum.max) errs.push('Humedad: el mínimo debe ser menor que el máximo.');
+      if(cfg.hum.min<LIMITS.hum.min||cfg.hum.max>LIMITS.hum.max) errs.push(`Humedad: fuera de ${LIMITS.hum.min}–${LIMITS.hum.max} %.`);
+      return errs;
+    }
+
+    function updateBars(){
+      const cfg=currentConfig();
+      const lt=LIMITS.temp, lh=LIMITS.hum;
+
+      const lT=clamp(pct(cfg.temp.min,lt.min,lt.max),0,100);
+      const rT=100-clamp(pct(cfg.temp.max,lt.min,lt.max),0,100);
+      bars.t.style.left=lT+'%'; bars.t.style.right=rT+'%';
+
+      const lH=clamp(pct(cfg.hum.min,lh.min,lh.max),0,100);
+      const rH=100-clamp(pct(cfg.hum.max,lh.min,lh.max),0,100);
+      bars.h.style.left=lH+'%'; bars.h.style.right=rH+'%';
+    }
+
+    function showToast(ok,msg=''){
+      const okBox=$('toast'); const errBox=$('toast-err'); const errMsg=$('err-msg');
+      if(ok){ errBox.classList.add('hidden'); okBox.classList.remove('hidden'); setTimeout(()=>okBox.classList.add('hidden'),2000); }
+      else{ errMsg.textContent=msg||'Revisa los valores.'; okBox.classList.add('hidden'); errBox.classList.remove('hidden'); setTimeout(()=>errBox.classList.add('hidden'),3500); }
+    }
+
+    ['input','change'].forEach(evt=>{ Object.values(inputs).forEach(el=>el.addEventListener(evt,updateBars)); });
+    $('btn-save').addEventListener('click', ()=>{
+      const cfg=currentConfig(); const errs=validate(cfg);
+      if(errs.length){ showToast(false,errs[0]); return; }
+      localStorage.setItem('api-connect-thresholds', JSON.stringify(cfg)); showToast(true);
+    });
+    $('btn-cancel').addEventListener('click', ()=>{ loadFromStorage(); updateBars(); });
+
+    loadFromStorage(); updateBars();
+  </script>
+</body>
+</html>
